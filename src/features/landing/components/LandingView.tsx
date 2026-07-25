@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Sparkles,
   Check,
+  Share2,
 } from "lucide-react";
 
 export function LandingView() {
@@ -286,6 +287,17 @@ export function LandingView() {
               <h3 className="text-base font-bold text-slate-900">Automated 8 PM Email Reminders</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
                 Our scheduler scans for inactive tracks (&gt;24h) and sends a single summary email every evening at 8 PM to help you protect your Streak.
+              </p>
+            </div>
+
+            {/* Feature 5 */}
+            <div className="p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
+              <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
+                <Share2 className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900">Social Media Streak Sharing</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Share your 🔥 Streak achievements directly to Facebook &amp; X (Twitter) to build public accountability, inspire your peers, and showcase your consistency.
               </p>
             </div>
           </div>

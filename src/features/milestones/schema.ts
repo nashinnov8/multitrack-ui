@@ -14,7 +14,7 @@ export type MilestoneResponse = z.infer<typeof milestoneResponseSchema>;
 export const milestoneRequestSchema = z.object({
   name: z.string().min(1, "Milestone name is required"),
   description: z.string().optional(),
-  isCompleted: z.boolean().default(false),
+  isCompleted: z.boolean(),
 });
 
 export type MilestoneRequest = z.infer<typeof milestoneRequestSchema>;

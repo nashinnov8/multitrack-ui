@@ -20,7 +20,7 @@ export type ConceptResponse = z.infer<typeof conceptResponseSchema>;
 
 export const conceptRequestSchema = z.object({
   name: z.string().min(1, "Concept name is required"),
-  status: conceptStatusSchema.default("NOT_UNDERSTOOD"),
+  status: conceptStatusSchema,
 });
 
 export type ConceptRequest = z.infer<typeof conceptRequestSchema>;

@@ -17,7 +17,7 @@ export type TrackResponse = z.infer<typeof trackResponseSchema>;
 export const trackCreateRequestSchema = z.object({
   name: z.string().min(1, "Track name is required"),
   description: z.string().optional(),
-  isPublic: z.boolean().default(false),
+  isPublic: z.boolean(),
 });
 
 export type TrackCreateRequest = z.infer<typeof trackCreateRequestSchema>;

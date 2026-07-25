@@ -190,6 +190,50 @@ export function LandingView() {
         </div>
       </section>
 
+      {/* 3.5. Dedicated Feynman Technique Section */}
+      <section id="feynman" className="py-16 sm:py-20 bg-slate-100/60 border-b border-slate-200/80">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-semibold mb-3">
+              <Brain className="w-3.5 h-3.5" />
+              <span>The Ultimate Learning Technique</span>
+            </div>
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+              The Feynman Method: Learn by Teaching
+            </h2>
+            <p className="text-slate-500 text-xs sm:text-sm mt-2 leading-relaxed">
+              Named after Nobel Prize-winning physicist Richard Feynman. True mastery comes from explaining complex ideas in simple terms.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
+              <span className="text-xs font-extrabold text-indigo-600">STEP 1</span>
+              <h3 className="text-sm font-bold text-slate-900">Choose a Concept</h3>
+              <p className="text-xs text-slate-500 leading-normal">Select a specific topic you want to master within your track.</p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
+              <span className="text-xs font-extrabold text-indigo-600">STEP 2</span>
+              <h3 className="text-sm font-bold text-slate-900">Explain Simply</h3>
+              <p className="text-xs text-slate-500 leading-normal">Write a check-in note as if teaching it to a 12-year-old child.</p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
+              <span className="text-xs font-extrabold text-amber-600">STEP 3</span>
+              <h3 className="text-sm font-bold text-slate-900">Identify Gaps</h3>
+              <p className="text-xs text-slate-500 leading-normal">Spot where you stumble or use jargon. Those are your knowledge gaps.</p>
+            </div>
+
+            <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
+              <span className="text-xs font-extrabold text-emerald-600">STEP 4</span>
+              <h3 className="text-sm font-bold text-slate-900">Review & Simplify</h3>
+              <p className="text-xs text-slate-500 leading-normal">Re-read source material and refine your explanation until effortless.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4. Core Features Bento Grid */}
       <section id="features" className="py-16 sm:py-20">
         <div className="container mx-auto max-w-5xl px-4">

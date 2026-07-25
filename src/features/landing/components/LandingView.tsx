@@ -245,9 +245,9 @@ export function LandingView() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Feature 1 */}
-            <div className="md:col-span-2 p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+            {/* Feature 1 (Row 1 - Left) */}
+            <div className="md:col-span-3 p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
               <div className="w-9 h-9 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
                 <Brain className="w-5 h-5" />
               </div>
@@ -257,19 +257,19 @@ export function LandingView() {
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
+            {/* Feature 2 (Row 1 - Right) */}
+            <div className="md:col-span-3 p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
               <div className="w-9 h-9 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
                 <Flame className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-slate-900">Streak & Level System</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Earn EXP points on every check-in, level up your profile, and unlock prestigious Badges.
+                Earn EXP points on every check-in, level up your profile, and unlock prestigious Badges to maintain unbreakable momentum.
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
+            {/* Feature 3 (Row 2 - Left) */}
+            <div className="md:col-span-2 p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
               <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
                 <Target className="w-5 h-5" />
               </div>
@@ -279,25 +279,25 @@ export function LandingView() {
               </p>
             </div>
 
-            {/* Feature 4 */}
+            {/* Feature 4 (Row 2 - Middle) */}
             <div className="md:col-span-2 p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
               <div className="w-9 h-9 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600">
                 <Mail className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Automated 8 PM Email Reminders</h3>
+              <h3 className="text-base font-bold text-slate-900">Automated Mail Reminders</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Our scheduler scans for inactive tracks (&gt;24h) and sends a single summary email every evening at 8 PM to help you protect your Streak.
+                Our 8 PM daily scheduler scans inactive tracks (&gt;24h) and sends a summary email to protect your Streak.
               </p>
             </div>
 
-            {/* Feature 5 */}
-            <div className="p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
+            {/* Feature 5 (Row 2 - Right) */}
+            <div className="md:col-span-2 p-6 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-3">
               <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
                 <Share2 className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Social Media Streak Sharing</h3>
+              <h3 className="text-base font-bold text-slate-900">Social Media Sharing</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Share your 🔥 Streak achievements directly to Facebook &amp; X (Twitter) to build public accountability, inspire your peers, and showcase your consistency.
+                Share your 🔥 Streak directly to Facebook &amp; X to build public accountability and inspire peers.
               </p>
             </div>
           </div>

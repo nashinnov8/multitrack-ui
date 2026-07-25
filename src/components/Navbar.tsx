@@ -6,10 +6,16 @@ import { tokenStorage } from "@/lib/token";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { LogOut, LayoutDashboard, Zap, User } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
   const queryClient = useQueryClient();
+  const [hasToken, setHasToken] = useState<boolean>(true);
+
+  useEffect(() => {
+    setHasToken(tokenStorage.hasToken());
+  }, [pathname]);
 
   const isAuthPage =
     pathname === "/login" ||
@@ -17,7 +23,8 @@ export function Navbar() {
     pathname === "/forgot-password" ||
     pathname === "/verify-email";
 
-  if (isAuthPage) return null;
+  // Hide top app navbar on auth pages or unauthenticated landing page
+  if (isAuthPage || (!hasToken && pathname === "/")) return null;
 
   const handleLogout = () => {
     tokenStorage.clear();

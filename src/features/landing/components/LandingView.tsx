@@ -8,12 +8,8 @@ import {
   Brain,
   Flame,
   Mail,
-  CheckCircle2,
   ArrowRight,
   Sparkles,
-  Layers,
-  Award,
-  BookOpen,
   Check,
 } from "lucide-react";
 
@@ -34,25 +30,25 @@ export function LandingView() {
 
           <nav className="hidden md:flex items-center space-x-6 text-xs font-medium text-slate-600">
             <a href="#features" className="hover:text-indigo-600 transition-colors">
-              Tính năng
+              Features
             </a>
             <a href="#feynman" className="hover:text-indigo-600 transition-colors">
-              Phương pháp Feynman
+              Feynman Method
             </a>
             <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">
-              Cách hoạt động
+              How It Works
             </a>
           </nav>
 
           <div className="flex items-center space-x-2">
             <Link href="/login">
               <Button variant="ghost" size="sm" className="text-xs font-medium text-slate-700 hover:bg-slate-100">
-                Đăng nhập
+                Log In
               </Button>
             </Link>
             <Link href="/signup">
               <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-sm">
-                Bắt đầu miễn phí <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                Get Started Free <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Button>
             </Link>
           </div>
@@ -65,29 +61,29 @@ export function LandingView() {
           {/* Top Pill Badge */}
           <div className="fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-6">
             <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Kết hợp Feynman Technique & Gamification</span>
+            <span>Powered by Feynman Technique & Gamification</span>
           </div>
 
           {/* H1 Headline */}
           <h1 className="fade-up fade-up-delay-1 text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 max-w-3xl mx-auto leading-tight sm:leading-tight">
-            Học Nhiều Kỹ Năng Cùng Lúc Mà <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Không Bị Bội Thực</span>
+            Master Multiple Skills at Once <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Without Burnout</span>
           </h1>
 
           {/* Subtitle */}
           <p className="fade-up fade-up-delay-2 text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mt-4 leading-relaxed">
-            Theo dõi nhiều lộ trình học tập song song, chủ động tìm lỗ hổng kiến thức bằng kỹ thuật Feynman và duy trì thói quen mỗi ngày với hệ thống Streak & EXP.
+            Track parallel learning goals, identify knowledge gaps with the Feynman Technique, and build unbreakable daily habits with Streaks & EXP rewards.
           </p>
 
           {/* Hero CTAs */}
           <div className="fade-up fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
             <Link href="/signup" className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 h-11 shadow-sm transition-all">
-                Tạo lộ trình học ngay <ArrowRight className="w-4 h-4 ml-2" />
+                Start Tracking Free <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
             <a href="#how-it-works" className="w-full sm:w-auto">
               <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-200 text-slate-700 hover:bg-slate-100 text-sm h-11">
-                Xem cách hoạt động
+                See How It Works
               </Button>
             </a>
           </div>
@@ -117,7 +113,7 @@ export function LandingView() {
                     </div>
                     <p className="text-[11px] text-slate-500">Listening & Speaking Feynman explanation</p>
                     <div className="flex items-center justify-between pt-1 text-[11px]">
-                      <span className="font-semibold text-slate-700">🔥 14 ngày streak</span>
+                      <span className="font-semibold text-slate-700">🔥 14 days streak</span>
                       <span className="text-indigo-600 font-bold">+150 EXP</span>
                     </div>
                   </div>
@@ -129,7 +125,7 @@ export function LandingView() {
                     </div>
                     <p className="text-[11px] text-slate-500">Mastering Microservices Architecture</p>
                     <div className="flex items-center justify-between pt-1 text-[11px]">
-                      <span className="font-semibold text-slate-700">🔥 8 ngày streak</span>
+                      <span className="font-semibold text-slate-700">🔥 8 days streak</span>
                       <span className="text-indigo-600 font-bold">+200 EXP</span>
                     </div>
                   </div>
@@ -145,10 +141,10 @@ export function LandingView() {
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              Tại sao cách học mục tiêu truyền thống thường thất bại?
+              Why Traditional Learning Approaches Fail
             </h2>
             <p className="text-slate-500 text-sm mt-2">
-              Hầu hết mọi người bỏ cuộc không phải vì lười biếng, mà vì thiếu hệ thống theo dõi đúng đắn.
+              Most people give up not due to lack of effort, but due to poor tracking systems and passive learning habits.
             </p>
           </div>
 
@@ -158,16 +154,16 @@ export function LandingView() {
               <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-red-600">
                 <span className="font-bold text-sm">✕</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900">Cách theo dõi cũ</h3>
+              <h3 className="text-base font-bold text-slate-900">Traditional Goal Tracking</h3>
               <ul className="space-y-2 text-xs text-slate-600">
                 <li className="flex items-start gap-2">
-                  <span className="text-red-500">►</span> Học vẹt kiến thức nhưng không thực sự hiểu bản chất.
+                  <span className="text-red-500">►</span> Passive reading without testing deep comprehension.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-red-500">►</span> Dễ bỏ dở khi học nhiều môn cùng lúc do quá tải.
+                  <span className="text-red-500">►</span> Overwhelmed when juggling multiple skills simultaneously.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-red-500">►</span> Thiếu động lực duy trì thói quen hàng ngày.
+                  <span className="text-red-500">►</span> Lack of daily accountability and habit rewards.
                 </li>
               </ul>
             </div>
@@ -177,16 +173,16 @@ export function LandingView() {
               <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-600">
                 <Check className="w-4 h-4 stroke-[3]" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Giải pháp Multitrack</h3>
+              <h3 className="text-base font-bold text-slate-900">The Multitrack Method</h3>
               <ul className="space-y-2 text-xs text-slate-700">
                 <li className="flex items-start gap-2">
-                  <span className="text-indigo-600">✓</span> Ép bản thân giải thích đơn giản ➔ Phát hiện ngay lỗ hổng (Feynman).
+                  <span className="text-indigo-600">✓</span> Force yourself to explain topics simply to uncover knowledge gaps.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-indigo-600">✓</span> Quản lý các Track song song mượt mà, rõ ràng.
+                  <span className="text-indigo-600">✓</span> Manage parallel tracks seamlessly without clutter.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-indigo-600">✓</span> Thưởng EXP, bảo vệ Streak 🔥 và tự động gửi Email nhắc nhở.
+                  <span className="text-indigo-600">✓</span> Gain EXP, protect 🔥 Streaks & get automated mail reminders.
                 </li>
               </ul>
             </div>
@@ -198,9 +194,9 @@ export function LandingView() {
       <section id="features" className="py-16 sm:py-20">
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Tính năng nổi bật</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Powerful Features</span>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mt-1">
-              Mọi công cụ bạn cần để làm chủ việc tự học
+              Everything You Need to Master Self-Learning
             </h2>
           </div>
 
@@ -210,9 +206,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
                 <Brain className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Kỹ thuật Feynman Check-in</h3>
+              <h3 className="text-base font-bold text-slate-900">Feynman Technique Check-in</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Mỗi bài Check-in yêu cầu bạn diễn đạt bài học theo cách đơn giản nhất như đang dạy lại cho một đứa trẻ. Nhờ đó, các lỗ hổng kiến thức (Gaps) lập tức lộ diện để bạn củng cố.
+                Log daily check-ins by explaining concepts as simply as if teaching a beginner. Knowledge gaps (Gaps) surface immediately so you can fix them.
               </p>
             </div>
 
@@ -223,7 +219,7 @@ export function LandingView() {
               </div>
               <h3 className="text-base font-bold text-slate-900">Streak & Level System</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Tích lũy điểm EXP mỗi ngày, tăng cấp Level cá nhân và chinh phục bộ Huy hiệu (Badges) danh giá.
+                Earn EXP points on every check-in, level up your profile, and unlock prestigious Badges.
               </p>
             </div>
 
@@ -234,7 +230,7 @@ export function LandingView() {
               </div>
               <h3 className="text-base font-bold text-slate-900">Parallel Track Tracker</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Quản lý đồng thời nhiều mục tiêu khác nhau (Tiếng Anh, Lập trình, Thể thao) mà không bị nhầm lẫn.
+                Track multiple independent goals (English, Coding, Fitness) simultaneously without confusion.
               </p>
             </div>
 
@@ -243,9 +239,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600">
                 <Mail className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Nhắc nhở tự động qua Email lúc 8h tối</h3>
+              <h3 className="text-base font-bold text-slate-900">Automated 8 PM Email Reminders</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Hệ thống tự động quét các Track bị bỏ bê quá 24h và gửi 1 email nhắc nhở tổng hợp lúc 20:00 mỗi ngày để bạn kịp thời điểm danh bảo vệ Streak.
+                Our scheduler scans for inactive tracks (&gt;24h) and sends a single summary email every evening at 8 PM to help you protect your Streak.
               </p>
             </div>
           </div>
@@ -256,9 +252,9 @@ export function LandingView() {
       <section id="how-it-works" className="py-16 bg-white border-t border-slate-200/80">
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Quy trình đơn giản</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Simple Workflow</span>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mt-1">
-              3 Bước Để Làm Chủ Kỹ Năng Mới
+              3 Steps to Master Any Skill
             </h2>
           </div>
 
@@ -267,24 +263,24 @@ export function LandingView() {
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-3">
                 1
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Tạo Lộ Trình (Track)</h3>
-              <p className="text-xs text-slate-500">Tạo các Track học tập và gắn Milestones/Concepts cần đạt.</p>
+              <h3 className="text-sm font-bold text-slate-900">Create Learning Track</h3>
+              <p className="text-xs text-slate-500">Define target goals, Milestones, and key Concepts.</p>
             </div>
 
             <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-2">
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-3">
                 2
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Check-in Feynman</h3>
-              <p className="text-xs text-slate-500">Điểm danh mỗi ngày và viết lời giải thích đơn giản cho khái niệm.</p>
+              <h3 className="text-sm font-bold text-slate-900">Feynman Check-in</h3>
+              <p className="text-xs text-slate-500">Log daily progress and explain concepts in plain English.</p>
             </div>
 
             <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-2">
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-3">
                 3
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Thăng Cấp & Nhận Badge</h3>
-              <p className="text-xs text-slate-500">Thu thập EXP, tăng Level cá nhân và tích lũy chuỗi Streak 🔥.</p>
+              <h3 className="text-sm font-bold text-slate-900">Level Up & Build Habits</h3>
+              <p className="text-xs text-slate-500">Earn EXP points, increase Level, and maintain habit Streaks.</p>
             </div>
           </div>
         </div>
@@ -295,15 +291,15 @@ export function LandingView() {
         <div className="container mx-auto max-w-4xl px-4">
           <div className="p-8 sm:p-10 rounded-2xl bg-indigo-600 text-white text-center shadow-lg space-y-4">
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Sẵn sàng làm chủ lộ trình học tập của bạn?
+              Ready to Master Your Learning Journey?
             </h2>
             <p className="text-indigo-100 text-xs sm:text-sm max-w-xl mx-auto">
-              Tham gia Multitrack ngay hôm nay. Hoàn toàn miễn phí và không cần thẻ tín dụng.
+              Join Multitrack today. Free forever and no credit card required.
             </p>
             <div className="pt-2">
               <Link href="/signup">
                 <Button size="lg" className="bg-white hover:bg-slate-100 text-indigo-600 font-bold text-sm px-6 h-11 shadow-sm">
-                  Tạo tài khoản miễn phí <ArrowRight className="w-4 h-4 ml-2" />
+                  Create Free Account <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
             </div>

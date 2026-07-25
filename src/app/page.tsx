@@ -1,11 +1,34 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { tokenStorage } from "@/lib/token";
+import { LandingView } from "@/features/landing/components/LandingView";
 import { TrackList } from "@/features/tracks/components/TrackList";
 import { CreateTrackDialog } from "@/features/tracks/components/CreateTrackDialog";
-import { Layers } from "lucide-react";
+import { Layers, Loader2 } from "lucide-react";
 
-export default function DashboardPage() {
+export default function HomePage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setIsAuthenticated(tokenStorage.hasToken());
+  }, []);
+
+  if (isAuthenticated === null) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <Loader2 className="w-6 h-6 text-indigo-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <LandingView />;
+  }
+
   return (
     <div className="container mx-auto py-6 px-4 max-w-5xl">
-      {/* Header */}
+      {/* Dashboard Header */}
       <div className="fade-up flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 border-b border-slate-200/60 pb-4">
         <div>
           <div className="flex items-center space-x-1.5 mb-1">

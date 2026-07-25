@@ -1,0 +1,7 @@
+allowBuilds:
+  sharp: set this to true or false
+  unrs-resolver: set this to true or false
+ignoreScripts: true
+minimumReleaseAgeExclude:
+  - '@hookform/resolvers@5.4.2'
+  - react-hook-form@7.83.0

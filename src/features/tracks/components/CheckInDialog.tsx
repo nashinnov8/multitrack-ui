@@ -38,6 +38,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
 
   const [formError, setFormError] = useState<string | null>(null);
   const [aiResult, setAiResult] = useState<FeynmanEvaluationResponse | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, watch, setValue } = useForm<ActivityLogRequest>({
     resolver: zodResolver(activityLogRequestSchema),
@@ -55,12 +56,15 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
       reset();
       setFormError(null);
       setAiResult(null);
+      setAiError(null);
     } else {
       notifyEvent("OPEN_CHECKIN_DIALOG");
     }
   };
 
   const handleAiEvaluate = () => {
+    setAiError(null);
+    setAiResult(null);
     const selectedConcept = concepts?.find((c) => c.id === watchConceptId);
     evaluateFeynman(
       {
@@ -73,6 +77,11 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
       {
         onSuccess: (data) => {
           setAiResult(data);
+          setAiError(null);
+        },
+        onError: (err: any) => {
+          setAiResult(null);
+          setAiError(err?.message || "AI Service currently unavailable");
         },
       }
     );
@@ -256,6 +265,14 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
                         </Button>
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* AI Error Card */}
+                {field.id === "explainSimply" && aiError && (
+                  <div className="mt-2.5 p-3 rounded-xl bg-red-50 border border-red-200/80 text-xs text-red-700 font-medium flex items-start gap-2 animate-in fade-in duration-300">
+                    <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+                    <span>{aiError}</span>
                   </div>
                 )}
               </div>

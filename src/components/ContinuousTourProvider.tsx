@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useLocaleContext } from "@/components/I18nProvider";
 import { driver, Driver } from "driver.js";
@@ -37,9 +37,12 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
   const { locale } = useLocaleContext();
   const isVi = locale === "vi";
 
+  // Use ref for driver so notifyEvent always has access to the latest instance
+  const driverRef = useRef<Driver | null>(null);
+  const stepRef = useRef<number>(-1);
+
   const [activeStep, setActiveStep] = useState<number>(-1);
   const [isTourActive, setIsTourActive] = useState<boolean>(false);
-  const [driverInstance, setDriverInstance] = useState<Driver | null>(null);
 
   // Restore tour state from localStorage on mount
   useEffect(() => {
@@ -48,6 +51,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
       if (savedStep !== null && savedStep !== undefined) {
         const stepNum = parseInt(savedStep, 10);
         if (stepNum >= 0 && stepNum < 6) {
+          stepRef.current = stepNum;
           setActiveStep(stepNum);
           setIsTourActive(true);
         }
@@ -55,7 +59,17 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
     } catch (e) {}
   }, []);
 
+  // Helper: destroy any existing driver overlay immediately
+  const destroyCurrentDriver = () => {
+    if (driverRef.current) {
+      try { driverRef.current.destroy(); } catch (e) {}
+      driverRef.current = null;
+    }
+  };
+
   const saveStep = (step: number) => {
+    destroyCurrentDriver();
+    stepRef.current = step;
     setActiveStep(step);
     try {
       if (step < 0 || step >= 6) {
@@ -69,27 +83,21 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
     } catch (e) {}
   };
 
-  const startTour = () => {
+  const startTour = useCallback(() => {
     saveStep(0);
-  };
+  }, []);
 
-  const stopTour = () => {
-    if (driverInstance) {
-      driverInstance.destroy();
-      setDriverInstance(null);
-    }
+  const stopTour = useCallback(() => {
+    destroyCurrentDriver();
     saveStep(-1);
-  };
+  }, []);
 
   // Render driver spotlight based on current activeStep and pathname
-  const renderCurrentStep = useCallback(() => {
-    if (activeStep < 0 || activeStep >= 6) {
-      if (driverInstance) {
-        driverInstance.destroy();
-        setDriverInstance(null);
-      }
-      return;
-    }
+  useEffect(() => {
+    // Always destroy previous driver first
+    destroyCurrentDriver();
+
+    if (activeStep < 0 || activeStep >= 6) return;
 
     let targetElement = "";
     let title = "";
@@ -108,10 +116,10 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
         align = "end";
         break;
 
-      case 1: // Step 2: Waiting for track creation (Overlay hidden for typing)
+      case 1: // Waiting for track creation — NO overlay shown
         return;
 
-      case 2: // Step 3: Highlight new Track Card on Dashboard
+      case 2: // Step 2: Highlight new Track Card on Dashboard
         targetElement = "#tour-track-card";
         title = isVi ? "Bước 2: Mở Trang Chi Tiết 🎴" : "Step 2: Open Track Details 🎴";
         description = isVi
@@ -121,7 +129,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
         align = "start";
         break;
 
-      case 3: // Step 4: Inside Track Details -> Add Concept Button
+      case 3: // Step 3: Inside Track Details -> Add Concept Button
         targetElement = "#tour-add-concept-btn";
         title = isVi ? "Bước 3: Thêm Khái Niệm Bài Học 💡" : "Step 3: Add Concepts 💡";
         description = isVi
@@ -131,7 +139,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
         align = "start";
         break;
 
-      case 4: // Step 5: Inside Track Details -> Check In Now
+      case 4: // Step 4: Inside Track Details -> Check In Now
         targetElement = "#tour-checkin-now-btn";
         title = isVi ? "Bước 4: Điểm Danh Feynman Hàng Ngày 🧠" : "Step 4: Daily Feynman Check-in 🧠";
         description = isVi
@@ -141,7 +149,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
         align = "end";
         break;
 
-      case 5: // Step 6: View Knowledge Gaps
+      case 5: // Step 5: View Knowledge Gaps
         targetElement = "#tour-gaps-btn";
         title = isVi ? "Bước 5: Xem Lỗ Hổng Kiến Thức (Gaps) 🎯" : "Step 5: View Knowledge Gaps 🎯";
         description = isVi
@@ -155,95 +163,78 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
         return;
     }
 
-    // Wait 400ms for DOM elements to stabilize on screen/navigation
+    // Wait for DOM to stabilize after navigation/render
     const timer = setTimeout(() => {
       const el = document.querySelector(targetElement);
       if (!el) return;
 
       const d = driver({
-        showProgress: true,
+        showProgress: false,
         animate: true,
         allowClose: true,
-        doneBtnText: isVi ? "Hoàn thành 🎯" : "Done 🎯",
-        nextBtnText: isVi ? "Bỏ qua tour" : "Skip tour",
-        prevBtnText: isVi ? "Thoát" : "Close",
+        doneBtnText: isVi ? "Đã hiểu ✓" : "Got it ✓",
+        nextBtnText: isVi ? "Bỏ qua" : "Skip",
+        prevBtnText: isVi ? "Đóng" : "Close",
         onDestroyed: () => {
-          setDriverInstance(null);
+          driverRef.current = null;
         },
         steps: [
           {
             element: targetElement,
-            popover: {
-              title,
-              description,
-              side,
-              align,
-            },
+            popover: { title, description, side, align },
           },
         ],
       });
 
-      // Destroy driver overlay immediately when user clicks the highlighted element
-      const destroyOnClick = () => {
-        d.destroy();
-        setDriverInstance(null);
-      };
-      el.addEventListener("click", destroyOnClick, { once: true });
+      // When user clicks the highlighted element, destroy overlay immediately
+      el.addEventListener("click", () => {
+        destroyCurrentDriver();
+      }, { once: true });
 
+      driverRef.current = d;
       d.drive();
-      setDriverInstance(d);
-    }, 400);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [activeStep, pathname, isVi]);
 
-  useEffect(() => {
-    renderCurrentStep();
-  }, [renderCurrentStep]);
+  // Event listener — uses refs so it always has the latest driver/step
+  const notifyEvent = useCallback((event: TourEvent) => {
+    // Always destroy any existing overlay first
+    destroyCurrentDriver();
 
-  // Event listener callback when user completes specific actions
-  const notifyEvent = (event: TourEvent) => {
-    // Immediately destroy current driver overlay so user has 100% unblocked modal/input access
-    if (driverInstance) {
-      driverInstance.destroy();
-      setDriverInstance(null);
-    }
+    const current = stepRef.current;
 
     switch (event) {
       case "OPEN_CREATE_DIALOG":
-        // Temporarily hide spotlight while user types in modal
-        if (activeStep === 0) saveStep(1);
+        if (current === 0) saveStep(1); // hide overlay, wait for user to type
         break;
 
       case "TRACK_CREATED":
-        // Track created -> advance to Step 2 (Highlight new Track Card)
-        saveStep(2);
+        if (current === 0 || current === 1) saveStep(2); // show Track Card highlight
         break;
 
       case "ENTERED_TRACK_DETAILS":
-        // User entered track details page -> advance to Step 3 (Highlight + Add Concept)
-        if (activeStep === 2 || activeStep === 1) saveStep(3);
+        if (current === 2 || current === 1) saveStep(3); // show Add Concept highlight
         break;
 
       case "OPEN_CONCEPT_DIALOG":
-        // User opened concept modal -> temporarily hide spotlight for typing
+        // hide overlay while user types in concept modal
         break;
 
       case "CONCEPT_CREATED":
-        // Concept created -> advance to Step 4 (Highlight Check-In Now button)
-        saveStep(4);
+        if (current === 3) saveStep(4); // show Check-In highlight
         break;
 
       case "OPEN_CHECKIN_DIALOG":
-        // User opened check-in modal -> temporarily hide spotlight for typing
+        // hide overlay while user types in check-in modal
         break;
 
       case "CHECKIN_COMPLETED":
-        // Check-in completed -> advance to Step 5 (Highlight View Learning Gaps)
-        saveStep(5);
+        if (current === 4) saveStep(5); // show Gaps highlight
         break;
     }
-  };
+  }, []);
 
   return (
     <ContinuousTourContext.Provider

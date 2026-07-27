@@ -15,10 +15,12 @@ export function Navbar() {
   const pathname = usePathname();
   const queryClient = useQueryClient();
   const t = useTranslations("nav");
-  const [hasToken, setHasToken] = useState<boolean>(true);
+  const [hasToken, setHasToken] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const [showTour, setShowTour] = useState<boolean>(false);
 
   useEffect(() => {
+    setMounted(true);
     setHasToken(tokenStorage.hasToken());
   }, [pathname]);
 
@@ -29,7 +31,7 @@ export function Navbar() {
     pathname === "/verify-email";
 
   // Hide top app navbar on auth pages or unauthenticated landing page
-  if (isAuthPage || (!hasToken && pathname === "/")) return null;
+  if (isAuthPage || (mounted && !hasToken && pathname === "/")) return null;
 
   const handleLogout = () => {
     tokenStorage.clear();
@@ -53,35 +55,39 @@ export function Navbar() {
 
           {/* Nav links */}
           <nav className="flex items-center space-x-1">
-            <Link href="/">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`text-xs font-medium h-8 px-3 ${
-                  pathname === "/"
-                    ? "bg-slate-100 text-slate-900"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <LayoutDashboard className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-                {t("dashboard")}
-              </Button>
-            </Link>
+            {hasToken && (
+              <>
+                <Link href="/">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`text-xs font-medium h-8 px-3 ${
+                      pathname === "/"
+                        ? "bg-slate-100 text-slate-900"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    }`}
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+                    {t("dashboard")}
+                  </Button>
+                </Link>
 
-            <Link href="/profile">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`text-xs font-medium h-8 px-3 ${
-                  pathname === "/profile"
-                    ? "bg-slate-100 text-slate-900"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-              >
-                <User className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-                {t("profile")}
-              </Button>
-            </Link>
+                <Link href="/profile">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`text-xs font-medium h-8 px-3 ${
+                      pathname === "/profile"
+                        ? "bg-slate-100 text-slate-900"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    }`}
+                  >
+                    <User className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+                    {t("profile")}
+                  </Button>
+                </Link>
+              </>
+            )}
 
             <Link href="/guide">
               <Button
@@ -99,35 +105,52 @@ export function Navbar() {
             </Link>
           </nav>
 
-          {/* Right side controls: Tour Help + Language Switcher + Logout */}
+          {/* Right side controls: Language Switcher + Conditional Auth/Logout */}
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowTour(true)}
-              className="text-xs h-8 px-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-              title="Xem lại Tour Hướng dẫn"
-            >
-              <HelpCircle className="w-4 h-4 text-indigo-600" />
-            </Button>
-
             <LanguageSwitcher />
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleLogout}
-              className="text-xs h-8 px-2.5 text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
-            >
-              <LogOut className="w-3.5 h-3.5 mr-1.5" />
-              <span className="hidden sm:inline">{t("logout")}</span>
-            </Button>
+            {hasToken ? (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowTour(true)}
+                  className="text-xs h-8 px-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                  title="Xem lại Tour Hướng dẫn"
+                >
+                  <HelpCircle className="w-4 h-4 text-indigo-600" />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleLogout}
+                  className="text-xs h-8 px-2.5 text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+                >
+                  <LogOut className="w-3.5 h-3.5 mr-1.5" />
+                  <span className="hidden sm:inline">{t("logout")}</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button variant="ghost" size="sm" className="text-xs h-8 px-3 text-slate-700 hover:bg-slate-100">
+                    {t("login")}
+                  </Button>
+                </Link>
+                <Link href="/signup">
+                  <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs h-8 px-3">
+                    {t("getStarted")}
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
 
       {/* Manual Trigger Tour Modal */}
-      <OnboardingTourDialog open={showTour} onOpenChange={setShowTour} />
+      {hasToken && <OnboardingTourDialog open={showTour} onOpenChange={setShowTour} />}
     </>
   );
 }

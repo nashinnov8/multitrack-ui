@@ -107,7 +107,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
             <span>⭐ Best Streak:</span>
             <span className="font-bold text-slate-900">{track.longestStreak}</span>
           </div>
-          <Link href={`/tracks/${track.id}/gaps`} className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline ml-auto">
+          <Link id="tour-gaps-btn" href={`/tracks/${track.id}/gaps`} className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline ml-auto">
             View Learning Gaps &rarr;
           </Link>
         </div>
@@ -177,7 +177,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         </div>
 
         {/* Concepts Section */}
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div id="tour-concepts-section" className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-base font-bold text-slate-900">Concepts</h2>

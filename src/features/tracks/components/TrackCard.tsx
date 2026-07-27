@@ -37,7 +37,9 @@ export function TrackCard({ track, onCheckIn }: TrackCardProps) {
 
   return (
     <>
-      <div className={`group relative flex flex-col rounded-xl overflow-hidden p-4 bg-white border transition-all duration-200 hover:shadow-md ${
+      <div
+        id="tour-track-card"
+        className={`group relative flex flex-col rounded-xl overflow-hidden p-4 bg-white border transition-all duration-200 hover:shadow-md ${
         stale ? "border-amber-200/80 hover:border-amber-300" : "border-slate-200/80 hover:border-slate-300"
       }`}>
         {/* Top indicator bar */}
@@ -107,6 +109,7 @@ export function TrackCard({ track, onCheckIn }: TrackCardProps) {
         {/* Actions */}
         <div className="flex gap-1.5 mt-auto pt-2 border-t border-slate-100">
           <Button
+            id="tour-checkin-btn"
             size="sm"
             className="flex-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium text-[11px] h-7 px-2 border border-indigo-200/60 shadow-none transition-all"
             onClick={() => onCheckIn(track.id)}

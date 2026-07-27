@@ -43,6 +43,7 @@ export function CreateTrackDialog() {
   return (
     <>
       <Button
+        id="tour-create-track-btn"
         onClick={() => setOpen(true)}
         className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all"
       >

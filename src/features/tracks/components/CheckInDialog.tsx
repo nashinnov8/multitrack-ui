@@ -132,6 +132,11 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
                   className="bg-slate-50 border-slate-200 focus:bg-white focus:border-indigo-500 text-sm placeholder:text-slate-400 resize-none"
                   {...register(field.id as any)}
                 />
+                {field.id === "explainSimply" && (
+                  <p className="text-[11px] text-indigo-600 font-medium mt-0.5">
+                    💡 Viết từ 15 ký tự trở lên để nhận trọn vẹn +150 EXP & duy trì Streak 🔥
+                  </p>
+                )}
               </div>
             );
           })}

@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { getUserProfile, getUserBadges, getAllBadges } from "./api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getUserProfile, getUserBadges, getAllBadges, buyStreakFreeze } from "./api";
 
 export const userKeys = {
   all: ["user"] as const,
@@ -26,5 +26,16 @@ export const useAllBadges = () => {
   return useQuery({
     queryKey: userKeys.allBadges(),
     queryFn: getAllBadges,
+  });
+};
+
+export const useBuyStreakFreeze = (userId?: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: () => buyStreakFreeze(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userKeys.all });
+    },
   });
 };

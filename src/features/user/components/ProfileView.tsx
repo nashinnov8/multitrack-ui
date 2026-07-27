@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserProfile, useUserBadges, useAllBadges } from "../hooks";
+import { useUserProfile, useUserBadges, useAllBadges, useBuyStreakFreeze } from "../hooks";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, Flame, Award, Star, User as UserIcon, Shield, CheckCircle2, Lock } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -19,6 +19,7 @@ export function ProfileView() {
   const { data: user, isLoading: userLoading, isError: userError } = useUserProfile();
   const { data: userBadges, isLoading: userBadgesLoading } = useUserBadges();
   const { data: allBadges } = useAllBadges();
+  const { mutate: buyStreakFreeze, isPending: isBuyingFreeze } = useBuyStreakFreeze();
 
   if (userLoading) {
     return (
@@ -98,6 +99,15 @@ export function ProfileView() {
                   <span className="font-extrabold text-[11px]">𝕏</span>
                   {t("shareX")}
                 </button>
+
+                <button
+                  disabled={isBuyingFreeze || user.totalExp < 500}
+                  onClick={() => buyStreakFreeze()}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-xs shadow-xs transition-colors"
+                  title="Mua 1 Khiên Bảo Vệ Streak (500 EXP)"
+                >
+                  <span>🧊</span> {isBuyingFreeze ? "Đang mua..." : "Mua Khiên (500 EXP)"}
+                </button>
               </div>
             </div>
 
@@ -122,7 +132,7 @@ export function ProfileView() {
         </div>
 
         {/* Stats Badges */}
-        <div className="grid grid-cols-3 gap-3 mt-6 pt-5 border-t border-slate-100">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-100">
           <div className="flex flex-col items-center justify-center p-3 bg-slate-50 rounded-lg border border-slate-100">
             <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
               <Shield className="w-3.5 h-3.5 text-indigo-600" /> {t("level")}
@@ -142,6 +152,13 @@ export function ProfileView() {
               <Flame className="w-3.5 h-3.5 text-orange-500 fill-orange-400" /> {t("globalStreak")}
             </span>
             <span className="text-lg font-bold text-slate-900 mt-1">{user.globalStreak} d</span>
+          </div>
+
+          <div className="flex flex-col items-center justify-center p-3 bg-cyan-50/60 rounded-lg border border-cyan-100 relative group">
+            <span className="text-xs text-cyan-700 font-medium flex items-center gap-1">
+              <span>🧊</span> Khiên Streak
+            </span>
+            <span className="text-lg font-bold text-cyan-950 mt-1">{user.streakFreezeCount ?? 0}</span>
           </div>
         </div>
       </div>

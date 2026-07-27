@@ -8,6 +8,7 @@ export const userResponseSchema = z.object({
   totalExp: z.number(),
   level: z.number(),
   globalStreak: z.number(),
+  streakFreezeCount: z.number().optional().default(0),
   timezone: z.string().nullable().optional(),
 });
 

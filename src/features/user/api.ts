@@ -30,3 +30,9 @@ export const getUserBadges = async (userId?: string): Promise<UserBadgeResponse[
 export const getAllBadges = async (): Promise<BadgeResponse[]> => {
   return apiClient.get(`/badges`);
 };
+
+export const buyStreakFreeze = async (userId?: string): Promise<UserResponse> => {
+  const id = userId || getUserIdFromToken();
+  if (!id) throw new Error("User ID not found");
+  return apiClient.post(`/users/${id}/buy-streak-freeze`);
+};

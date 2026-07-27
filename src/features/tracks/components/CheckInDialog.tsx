@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, Loader2, BookOpen, Lightbulb, AlertTriangle, MessageSquare, CheckCircle2, Tag, Bot, Sparkles, Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 type CheckInDialogProps = {
   trackId: string | null;
@@ -30,6 +30,7 @@ type CheckInDialogProps = {
 
 export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) {
   const t = useTranslations("modals.checkIn");
+  const locale = useLocale();
   const { notifyEvent } = useContinuousTour();
   const { mutate: logActivity, isPending } = useLogActivity(trackId || "");
   const { data: concepts } = useConcepts(trackId || "");
@@ -67,6 +68,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
         explainSimply: watchExplain,
         whatLearned: watchLearned,
         note: watchNote,
+        lang: locale,
       },
       {
         onSuccess: (data) => {

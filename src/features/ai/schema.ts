@@ -5,6 +5,7 @@ export const feynmanEvaluationRequestSchema = z.object({
   explainSimply: z.string().optional(),
   whatLearned: z.string().optional(),
   note: z.string().optional(),
+  lang: z.string().optional(),
 });
 
 export type FeynmanEvaluationRequest = z.infer<typeof feynmanEvaluationRequestSchema>;

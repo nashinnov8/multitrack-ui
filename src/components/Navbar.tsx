@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { OnboardingTourDialog } from "@/components/OnboardingTourDialog";
-import { startSpotlightTour } from "@/components/SpotlightTour";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import { useLocaleContext } from "@/components/I18nProvider";
 import { LogOut, LayoutDashboard, Zap, User, BookOpen, HelpCircle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ export function Navbar() {
   const queryClient = useQueryClient();
   const t = useTranslations("nav");
   const { locale } = useLocaleContext();
+  const { startTour } = useContinuousTour();
   const [hasToken, setHasToken] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [showTour, setShowTour] = useState<boolean>(false);
@@ -117,7 +118,7 @@ export function Navbar() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => startSpotlightTour(locale as "en" | "vi")}
+                  onClick={startTour}
                   className="text-xs h-8 px-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
                   title="Tour Hướng Dẫn Tương Tác"
                 >

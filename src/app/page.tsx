@@ -6,7 +6,7 @@ import { LandingView } from "@/features/landing/components/LandingView";
 import { TrackList } from "@/features/tracks/components/TrackList";
 import { CreateTrackDialog } from "@/features/tracks/components/CreateTrackDialog";
 import { OnboardingTourDialog } from "@/components/OnboardingTourDialog";
-import { startSpotlightTour } from "@/components/SpotlightTour";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import { useLocaleContext } from "@/components/I18nProvider";
 import { useTranslations } from "next-intl";
 import { Layers, Loader2 } from "lucide-react";
@@ -14,6 +14,7 @@ import { Layers, Loader2 } from "lucide-react";
 export default function HomePage() {
   const t = useTranslations("dashboard");
   const { locale } = useLocaleContext();
+  const { startTour } = useContinuousTour();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [showTour, setShowTour] = useState<boolean>(false);
 
@@ -27,18 +28,18 @@ export default function HomePage() {
         if (!isTourDone) {
           setShowTour(true);
         } else {
-          // If modal tour done but spotlight tour not completed, trigger spotlight
-          const isSpotlightDone = localStorage.getItem("multitrack_spotlight_completed");
-          if (!isSpotlightDone) {
+          // If modal tour done but continuous tour not completed, start continuous tour
+          const isContinuousDone = localStorage.getItem("multitrack_continuous_completed");
+          if (!isContinuousDone) {
             const timer = setTimeout(() => {
-              startSpotlightTour(locale as "en" | "vi");
+              startTour();
             }, 800);
             return () => clearTimeout(timer);
           }
         }
       } catch (e) {}
     }
-  }, [locale]);
+  }, [locale, startTour]);
 
   if (isAuthenticated === null) {
     return (

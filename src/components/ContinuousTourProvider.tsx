@@ -167,7 +167,9 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
         doneBtnText: isVi ? "Hoàn thành 🎯" : "Done 🎯",
         nextBtnText: isVi ? "Bỏ qua tour" : "Skip tour",
         prevBtnText: isVi ? "Thoát" : "Close",
-        onDestroyed: () => {},
+        onDestroyed: () => {
+          setDriverInstance(null);
+        },
         steps: [
           {
             element: targetElement,
@@ -180,6 +182,13 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
           },
         ],
       });
+
+      // Destroy driver overlay immediately when user clicks the highlighted element
+      const destroyOnClick = () => {
+        d.destroy();
+        setDriverInstance(null);
+      };
+      el.addEventListener("click", destroyOnClick, { once: true });
 
       d.drive();
       setDriverInstance(d);

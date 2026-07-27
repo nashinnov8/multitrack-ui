@@ -46,7 +46,10 @@ export function CreateConceptDialog({ trackId }: { trackId: string }) {
   return (
     <>
       <Button
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          notifyEvent("OPEN_CONCEPT_DIALOG");
+        }}
         size="sm"
         variant="outline"
         className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 text-xs h-8"

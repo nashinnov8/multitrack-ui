@@ -63,6 +63,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
 
   const handleOpenChange = (open: boolean) => {
     if (!open) { onClose(); reset(); }
+    else { notifyEvent("OPEN_CHECKIN_DIALOG"); }
   };
 
   const onSubmit = (data: ActivityLogRequest) => {

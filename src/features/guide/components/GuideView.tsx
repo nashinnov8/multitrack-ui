@@ -138,16 +138,7 @@ export function GuideView() {
         {/* Column 2: Main Content Article (6 or 7 cols) */}
         <main className="md:col-span-6 lg:col-span-7 bg-white p-6 sm:p-8 rounded-xl border border-slate-200/80 shadow-xs">
           <article
-            className="prose prose-slate max-w-none text-slate-800 text-xs sm:text-sm leading-relaxed
-              prose-headings:font-bold prose-headings:text-slate-900
-              prose-h1:text-xl sm:prose-h1:text-2xl prose-h1:border-b prose-h1:border-slate-100 prose-h1:pb-3
-              prose-h2:text-base sm:prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3
-              prose-h3:text-sm sm:prose-h3:text-base prose-h3:mt-4
-              prose-p:text-slate-600 prose-p:my-2
-              prose-li:text-slate-600 prose-li:my-1
-              prose-blockquote:border-l-4 prose-blockquote:border-indigo-500 prose-blockquote:bg-indigo-50/50 prose-blockquote:p-3 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:text-indigo-900 prose-blockquote:my-4
-              prose-table:text-xs prose-th:bg-slate-100 prose-th:p-2 prose-td:p-2 prose-td:border-t prose-td:border-slate-100
-              "
+            className="markdown-body"
             dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
         </main>

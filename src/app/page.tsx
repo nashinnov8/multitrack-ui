@@ -5,15 +5,27 @@ import { tokenStorage } from "@/lib/token";
 import { LandingView } from "@/features/landing/components/LandingView";
 import { TrackList } from "@/features/tracks/components/TrackList";
 import { CreateTrackDialog } from "@/features/tracks/components/CreateTrackDialog";
+import { OnboardingTourDialog } from "@/components/OnboardingTourDialog";
 import { useTranslations } from "next-intl";
 import { Layers, Loader2 } from "lucide-react";
 
 export default function HomePage() {
   const t = useTranslations("dashboard");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [showTour, setShowTour] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsAuthenticated(tokenStorage.hasToken());
+    const hasToken = tokenStorage.hasToken();
+    setIsAuthenticated(hasToken);
+
+    if (hasToken) {
+      try {
+        const isTourDone = localStorage.getItem("multitrack_tour_completed");
+        if (!isTourDone) {
+          setShowTour(true);
+        }
+      } catch (e) {}
+    }
   }, []);
 
   if (isAuthenticated === null) {
@@ -51,6 +63,9 @@ export default function HomePage() {
       <div className="fade-up fade-up-delay-2">
         <TrackList />
       </div>
+
+      {/* Interactive Onboarding Tour Modal */}
+      <OnboardingTourDialog open={showTour} onOpenChange={setShowTour} />
     </div>
   );
 }

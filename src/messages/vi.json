@@ -110,5 +110,20 @@
     "statusActive": "Đang học",
     "statusPaused": "Tạm dừng",
     "statusCompleted": "Hoàn thành"
+  },
+  "tour": {
+    "skip": "Bỏ qua",
+    "back": "Quay lại",
+    "next": "Tiếp theo",
+    "getStarted": "Khám phá ngay",
+    "stepCounter": "Bước {current} / {total}",
+    "step1Title": "Chào mừng đến với Multitrack! 🚀",
+    "step1Desc": "Ứng dụng theo dõi lộ trình học tập cá nhân giúp bạn làm chủ nhiều kỹ năng cùng lúc bằng Phương pháp Feynman & Gamification.",
+    "step2Title": "1. Tạo Lộ Trình Học Tập 📌",
+    "step2Desc": "Tạo các mục tiêu như IELTS 8.0, System Design, hoặc Đọc sách. Chia nhỏ mục tiêu thành các Cột mốc (Milestones) & Khái niệm (Concepts).",
+    "step3Title": "2. Điểm Danh Feynman & Lỗ Hổng 🧠",
+    "step3Desc": "Điểm danh hàng ngày bằng cách giải thích bài học thật đơn giản như dạy một đứa trẻ 12 tuổi. Chỗ nào bị vấp ➔ Đánh dấu Lỗ hổng kiến thức (Gap).",
+    "step4Title": "3. Tích Lũy EXP & Bảo Vệ Streak 🔥",
+    "step4Desc": "Nhận +150 EXP mỗi lần điểm danh, thăng cấp Level cá nhân, chinh phục Huy hiệu Badges và bảo vệ chuỗi Streak mỗi ngày!"
   }
 }

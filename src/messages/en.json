@@ -110,5 +110,20 @@
     "statusActive": "Active",
     "statusPaused": "Paused",
     "statusCompleted": "Completed"
+  },
+  "tour": {
+    "skip": "Skip",
+    "back": "Back",
+    "next": "Next",
+    "getStarted": "Get Started",
+    "stepCounter": "Step {current} of {total}",
+    "step1Title": "Welcome to Multitrack! 🚀",
+    "step1Desc": "Your personal learning tracker designed to master multiple skills in parallel using the Feynman Technique and habit gamification.",
+    "step2Title": "1. Create Learning Tracks 📌",
+    "step2Desc": "Define major goals like IELTS 8.0, System Design, or Fitness. Break them down into manageable Milestones and key Concepts.",
+    "step3Title": "2. Feynman Check-ins & Gaps 🧠",
+    "step3Desc": "Log daily progress by explaining topics as simply as teaching a 12-year-old child. If you stumble, flag it as a Knowledge Gap to review later.",
+    "step4Title": "3. Earn EXP & Keep Streaks 🔥",
+    "step4Desc": "Earn +150 EXP per check-in, level up your profile, unlock prestigious Badges, and protect your daily Global Streak!"
   }
 }

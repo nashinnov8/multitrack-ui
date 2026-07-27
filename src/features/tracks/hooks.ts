@@ -77,7 +77,10 @@ export const useCreateTrack = () => {
   return useMutation({
     mutationFn: (data: TrackCreateRequest) => createTrack(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
+      // Invalidate tracks list, user profile (EXP/Level), and badges
+      queryClient.invalidateQueries({ queryKey: trackKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };
@@ -88,7 +91,9 @@ export const useDeleteTrack = () => {
   return useMutation({
     mutationFn: (id: string) => deleteTrack(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: trackKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };
@@ -100,9 +105,10 @@ export const useLogActivity = (trackId: string) => {
     mutationFn: (data: ActivityLogRequest) =>
       logActivity({ trackId, data }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: trackKeys.detail(trackId) });
-      queryClient.invalidateQueries({ queryKey: trackKeys.lists() });
-      queryClient.invalidateQueries({ queryKey: trackKeys.activityLogs(trackId, 0, 10) });
+      // Invalidate track details, activity logs, user profile (EXP/Level/Streaks), and badges
+      queryClient.invalidateQueries({ queryKey: trackKeys.all });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };

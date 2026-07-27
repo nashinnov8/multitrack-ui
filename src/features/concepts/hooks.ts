@@ -22,6 +22,8 @@ export const useCreateConcept = (trackId: string) => {
     mutationFn: (data: ConceptRequest) => createConcept({ trackId, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: conceptKeys.lists(trackId) });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };
@@ -39,6 +41,8 @@ export const useUpdateConcept = (trackId: string) => {
     }) => updateConcept({ trackId, conceptId, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: conceptKeys.lists(trackId) });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };
@@ -50,6 +54,8 @@ export const useDeleteConcept = (trackId: string) => {
     mutationFn: (conceptId: string) => deleteConcept({ trackId, conceptId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: conceptKeys.lists(trackId) });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };

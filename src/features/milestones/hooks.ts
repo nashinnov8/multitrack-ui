@@ -22,6 +22,8 @@ export const useCreateMilestone = (trackId: string) => {
     mutationFn: (data: MilestoneRequest) => createMilestone({ trackId, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: milestoneKeys.lists(trackId) });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };
@@ -39,6 +41,8 @@ export const useUpdateMilestone = (trackId: string) => {
     }) => updateMilestone({ trackId, milestoneId, data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: milestoneKeys.lists(trackId) });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };
@@ -50,6 +54,8 @@ export const useDeleteMilestone = (trackId: string) => {
     mutationFn: (milestoneId: string) => deleteMilestone({ trackId, milestoneId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: milestoneKeys.lists(trackId) });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["badges"] });
     },
   });
 };

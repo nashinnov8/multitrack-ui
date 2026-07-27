@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TrackCreateRequest, trackCreateRequestSchema } from "../schema";
 import { useCreateTrack } from "../hooks";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,7 @@ import { useTranslations } from "next-intl";
 
 export function CreateTrackDialog() {
   const t = useTranslations("dashboard");
+  const { notifyEvent } = useContinuousTour();
   const [open, setOpen] = useState(false);
   const { mutate: createTrack, isPending } = useCreateTrack();
 
@@ -34,9 +36,18 @@ export function CreateTrackDialog() {
     defaultValues: { name: "", description: "", isPublic: false },
   });
 
+  const handleOpenClick = () => {
+    setOpen(true);
+    notifyEvent("OPEN_CREATE_DIALOG");
+  };
+
   const onSubmit = (data: TrackCreateRequest) => {
     createTrack(data, {
-      onSuccess: () => { setOpen(false); reset(); },
+      onSuccess: () => {
+        setOpen(false);
+        reset();
+        notifyEvent("TRACK_CREATED");
+      },
     });
   };
 
@@ -44,7 +55,7 @@ export function CreateTrackDialog() {
     <>
       <Button
         id="tour-create-track-btn"
-        onClick={() => setOpen(true)}
+        onClick={handleOpenClick}
         className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all"
       >
         <Plus className="w-4 h-4 mr-1.5" />
@@ -105,7 +116,13 @@ export function CreateTrackDialog() {
               >
                 Cancel
               </Button>
-              <Button type="submit" size="sm" disabled={isPending} className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs">
+              <Button
+                id="tour-modal-submit-btn"
+                type="submit"
+                size="sm"
+                disabled={isPending}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs"
+              >
                 {isPending
                   ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />Saving...</>
                   : "Create Track"}

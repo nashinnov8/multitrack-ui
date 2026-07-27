@@ -11,7 +11,8 @@ import { ActivityTimeline } from "./ActivityTimeline";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, CheckCircle, Circle, ArrowLeft, Trash2, BookOpen, Clock } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import { CheckInDialog } from "./CheckInDialog";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -19,8 +20,13 @@ import { useRouter } from "next/navigation";
 
 export function TrackDetailView({ trackId }: { trackId: string }) {
   const router = useRouter();
+  const { notifyEvent } = useContinuousTour();
   const { data: track, isLoading: trackLoading, isError: trackError } = useTrack(trackId);
   const { mutate: deleteTrack, isPending: isDeletingTrack } = useDeleteTrack();
+
+  useEffect(() => {
+    notifyEvent("ENTERED_TRACK_DETAILS");
+  }, []);
   
   // Milestones hooks
   const { data: milestonesData, isLoading: milestonesLoading } = useMilestones(trackId);
@@ -83,7 +89,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
             <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">{track.description || "No description provided."}</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
-            <Button onClick={() => setIsCheckInOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs h-9 px-4 shadow-sm">
+            <Button id="tour-checkin-now-btn" onClick={() => setIsCheckInOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs h-9 px-4 shadow-sm">
               Check-In Now
             </Button>
             <Button
@@ -183,7 +189,9 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
               <h2 className="text-base font-bold text-slate-900">Concepts</h2>
               <p className="text-xs text-slate-400">Core topics & knowledge items</p>
             </div>
-            <CreateConceptDialog trackId={track.id} />
+            <div id="tour-add-concept-btn">
+              <CreateConceptDialog trackId={track.id} />
+            </div>
           </div>
           
           {conceptsLoading ? (

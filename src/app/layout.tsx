@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { I18nProvider } from "@/components/I18nProvider";
+import { ContinuousTourProvider } from "@/components/ContinuousTourProvider";
 import { Navbar } from "@/components/Navbar";
 
 const geistSans = Geist({
@@ -32,12 +33,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <I18nProvider>
-          <Providers>
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-          </Providers>
+          <ContinuousTourProvider>
+            <Providers>
+              <Navbar />
+              <main className="flex-1">
+                {children}
+              </main>
+            </Providers>
+          </ContinuousTourProvider>
         </I18nProvider>
       </body>
     </html>

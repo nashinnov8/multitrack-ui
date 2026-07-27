@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ConceptRequest, conceptRequestSchema, ConceptStatus } from "../schema";
+import { ConceptRequest, conceptRequestSchema } from "../schema";
 import { useCreateConcept } from "../hooks";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Plus, Loader2 } from "lucide-react";
 
 export function CreateConceptDialog({ trackId }: { trackId: string }) {
+  const { notifyEvent } = useContinuousTour();
   const [open, setOpen] = useState(false);
   const { mutate: createConcept, isPending } = useCreateConcept(trackId);
 
@@ -33,7 +35,11 @@ export function CreateConceptDialog({ trackId }: { trackId: string }) {
 
   const onSubmit = (data: ConceptRequest) => {
     createConcept(data, {
-      onSuccess: () => { setOpen(false); reset(); },
+      onSuccess: () => {
+        setOpen(false);
+        reset();
+        notifyEvent("CONCEPT_CREATED");
+      },
     });
   };
 

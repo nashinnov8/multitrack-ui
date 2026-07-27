@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ActivityLogRequest, activityLogRequestSchema } from "../schema";
 import { useLogActivity } from "../hooks";
 import { useConcepts } from "@/features/concepts/hooks";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import {
   Dialog,
   DialogContent,
@@ -51,6 +52,7 @@ const fields = [
 ] as const;
 
 export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) {
+  const { notifyEvent } = useContinuousTour();
   const { mutate: logActivity, isPending } = useLogActivity(trackId || "");
   const { data: concepts } = useConcepts(trackId || "");
 
@@ -66,7 +68,11 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
   const onSubmit = (data: ActivityLogRequest) => {
     if (!trackId) return;
     logActivity(data, {
-      onSuccess: () => { onClose(); reset(); },
+      onSuccess: () => {
+        onClose();
+        reset();
+        notifyEvent("CHECKIN_COMPLETED");
+      },
     });
   };
 

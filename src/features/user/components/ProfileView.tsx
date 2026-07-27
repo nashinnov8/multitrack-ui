@@ -174,17 +174,19 @@ export function ProfileView() {
             {userBadges?.map((ub) => (
               <div
                 key={ub.id}
-                className="flex items-center gap-3 p-3 rounded-lg bg-indigo-50/50 border border-indigo-100 shadow-xs"
+                className="flex items-center gap-3 p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 shadow-xs hover:border-indigo-200 transition-colors"
               >
-                <div className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center text-lg shrink-0 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
                   {ub.iconUrl || "🏆"}
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-1">
                     <h4 className="text-xs font-bold text-slate-900 truncate">{ub.badgeName}</h4>
-                    <span className="text-[10px] text-indigo-600 font-semibold">+{ub.expReward} EXP</span>
+                    <span className="text-[10px] text-indigo-600 font-bold bg-indigo-100/80 px-1.5 py-0.5 rounded">
+                      +{ub.expReward} EXP
+                    </span>
                   </div>
-                  <p className="text-[10px] text-slate-400 mt-0.5">
+                  <p className="text-[10px] text-slate-500 mt-0.5">
                     {t("earned")} {format(parseISO(ub.earnedAt), "MMM d, yyyy")}
                   </p>
                 </div>
@@ -197,14 +199,20 @@ export function ProfileView() {
               .map((badge) => (
                 <div
                   key={badge.id}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 border border-slate-200/60 opacity-60"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-slate-50/80 border border-slate-200/60 opacity-65 hover:opacity-90 transition-opacity relative group"
                 >
-                  <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-lg shrink-0">
-                    <Lock className="w-4 h-4" />
+                  <div className="w-10 h-10 rounded-xl bg-slate-200/80 text-slate-500 flex items-center justify-center text-xl shrink-0 relative overflow-hidden">
+                    <span className="grayscale opacity-50">{badge.iconUrl || "🏆"}</span>
+                    <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-[1px] flex items-center justify-center">
+                      <Lock className="w-3.5 h-3.5 text-white drop-shadow-sm" />
+                    </div>
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-xs font-semibold text-slate-700 truncate">{badge.name}</h4>
-                    <p className="text-[10px] text-slate-400 truncate">{badge.description || "Locked badge"}</p>
+                    <div className="flex items-center justify-between gap-1">
+                      <h4 className="text-xs font-semibold text-slate-800 truncate">{badge.name}</h4>
+                      <span className="text-[10px] text-slate-400 font-medium">+{badge.expReward} EXP</span>
+                    </div>
+                    <p className="text-[10px] text-slate-500 line-clamp-1 mt-0.5">{badge.description || "Locked badge"}</p>
                   </div>
                 </div>
               ))}

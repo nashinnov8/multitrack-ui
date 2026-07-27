@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Loader2, BookOpen, Lightbulb, AlertTriangle, MessageSquare, CheckCircle2, Tag } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type CheckInDialogProps = {
   trackId: string | null;
@@ -24,34 +25,8 @@ type CheckInDialogProps = {
   onClose: () => void;
 };
 
-const fields = [
-  {
-    id: "note",
-    label: "General Notes",
-    placeholder: "What did you work on today?",
-    icon: MessageSquare,
-  },
-  {
-    id: "whatLearned",
-    label: "What did you learn?",
-    placeholder: "Key concepts, ideas, or skills picked up...",
-    icon: BookOpen,
-  },
-  {
-    id: "explainSimply",
-    label: "Explain Simply",
-    placeholder: 'Explain it like you\'re teaching someone else — "Feynman technique"',
-    icon: Lightbulb,
-  },
-  {
-    id: "gapsFound",
-    label: "Gaps Found",
-    placeholder: "What are you still confused about? What needs more study?",
-    icon: AlertTriangle,
-  },
-] as const;
-
 export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) {
+  const t = useTranslations("modals.checkIn");
   const { notifyEvent } = useContinuousTour();
   const { mutate: logActivity, isPending } = useLogActivity(trackId || "");
   const { data: concepts } = useConcepts(trackId || "");
@@ -77,6 +52,33 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
     });
   };
 
+  const fields = [
+    {
+      id: "note",
+      label: t("noteLabel"),
+      placeholder: t("notePlaceholder"),
+      icon: MessageSquare,
+    },
+    {
+      id: "whatLearned",
+      label: t("learnedLabel"),
+      placeholder: t("learnedPlaceholder"),
+      icon: BookOpen,
+    },
+    {
+      id: "explainSimply",
+      label: t("feynmanLabel"),
+      placeholder: t("feynmanPlaceholder"),
+      icon: Lightbulb,
+    },
+    {
+      id: "gapsFound",
+      label: t("gapsLabel"),
+      placeholder: t("gapsPlaceholder"),
+      icon: AlertTriangle,
+    },
+  ] as const;
+
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="bg-white border-slate-200 sm:max-w-[500px] max-h-[90vh] overflow-y-auto p-6">
@@ -85,10 +87,10 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
             <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
               <CheckCircle2 className="w-4 h-4" />
             </div>
-            <DialogTitle className="text-lg font-bold text-slate-900">Daily Check-In</DialogTitle>
+            <DialogTitle className="text-lg font-bold text-slate-900">{t("title")}</DialogTitle>
           </div>
           <DialogDescription className="text-slate-500 text-xs">
-            Record today's progress to keep your streak active. Every entry counts.
+            {t("desc")}
           </DialogDescription>
         </DialogHeader>
 
@@ -98,14 +100,14 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
             <div className="space-y-1.5">
               <Label htmlFor="conceptId" className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
                 <Tag className="w-3.5 h-3.5 text-slate-400" />
-                Related Concept (Optional)
+                {t("conceptLabel")}
               </Label>
               <select
                 id="conceptId"
                 className="w-full h-9 rounded-md bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 text-sm px-3 text-slate-800"
                 {...register("conceptId")}
               >
-                <option value="">-- None --</option>
+                <option value="">{t("conceptNone")}</option>
                 {concepts.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
@@ -128,7 +130,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
                   placeholder={field.placeholder}
                   rows={2}
                   className="bg-slate-50 border-slate-200 focus:bg-white focus:border-indigo-500 text-sm placeholder:text-slate-400 resize-none"
-                  {...register(field.id)}
+                  {...register(field.id as any)}
                 />
               </div>
             );
@@ -142,12 +144,12 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
               className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs"
               onClick={() => handleOpenChange(false)}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button type="submit" size="sm" disabled={isPending || !trackId} className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs">
               {isPending
-                ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />Submitting...</>
-                : "Submit Check-In"}
+                ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />{t("submitting")}</>
+                : t("submit")}
             </Button>
           </div>
         </form>

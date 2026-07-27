@@ -111,6 +111,51 @@
     "statusPaused": "Tạm dừng",
     "statusCompleted": "Hoàn thành"
   },
+  "modals": {
+    "createTrack": {
+      "title": "Tạo Lộ Trình Mới",
+      "desc": "Xác định mục tiêu hoặc kỹ năng bạn muốn rèn luyện liên tục.",
+      "nameLabel": "Tên Lộ Trình *",
+      "namePlaceholder": "VD: IELTS 8.0, Lập trình React, Read 50 Books",
+      "descLabel": "Mô tả mục tiêu",
+      "descPlaceholder": "Bạn muốn đạt được điều gì ở lộ trình này?",
+      "makePublic": "Công khai lộ trình này với cộng đồng",
+      "cancel": "Hủy",
+      "submit": "Tạo Lộ Trình",
+      "saving": "Đang lưu..."
+    },
+    "createConcept": {
+      "buttonText": "Thêm Khái Niệm",
+      "title": "Thêm Khái Niệm Bài Học",
+      "desc": "Bổ sung khái niệm hoặc chủ đề cốt lõi cần làm chủ.",
+      "nameLabel": "Tên Khái Niệm *",
+      "namePlaceholder": "VD: Closure, Dependency Injection",
+      "statusLabel": "Trạng thái ban đầu",
+      "statusNotUnderstood": "Chưa hiểu ❌",
+      "statusGaps": "Còn lỗ hổng kiến thức ⚠️",
+      "statusMastered": "Đã làm chủ ✅",
+      "cancel": "Hủy",
+      "submit": "Thêm Khái Niệm",
+      "saving": "Đang lưu..."
+    },
+    "checkIn": {
+      "title": "Điểm Danh Hàng Ngày",
+      "desc": "Ghi lại tiến độ hôm nay để giữ chuỗi Streak luôn hoạt động.",
+      "noteLabel": "Ghi chú chung",
+      "notePlaceholder": "Hôm nay bạn đã thực hành những gì?",
+      "learnedLabel": "Bạn đã học được gì?",
+      "learnedPlaceholder": "Các ý tưởng, khái niệm hoặc kỹ năng mới...",
+      "feynmanLabel": "Giải thích đơn giản (Kỹ thuật Feynman)",
+      "feynmanPlaceholder": "Diễn đạt đơn giản như đang dạy cho một đứa trẻ 12 tuổi...",
+      "gapsLabel": "Lỗ hổng phát hiện (Gaps)",
+      "gapsPlaceholder": "Bạn còn chưa rõ chỗ nào? Cần ôn lại kiến thức gì?",
+      "conceptLabel": "Khái niệm liên quan (Tùy chọn)",
+      "conceptNone": "-- Không chọn --",
+      "cancel": "Hủy",
+      "submit": "Nộp bài Điểm danh",
+      "submitting": "Đang nộp..."
+    }
+  },
   "tour": {
     "skip": "Bỏ qua",
     "back": "Quay lại",

@@ -111,6 +111,51 @@
     "statusPaused": "Paused",
     "statusCompleted": "Completed"
   },
+  "modals": {
+    "createTrack": {
+      "title": "Create New Track",
+      "desc": "Define a goal or skill you want to track consistently.",
+      "nameLabel": "Track Name *",
+      "namePlaceholder": "e.g. Master React, IELTS 8.0, Read 50 Books",
+      "descLabel": "Description",
+      "descPlaceholder": "What do you want to achieve?",
+      "makePublic": "Make this track public",
+      "cancel": "Cancel",
+      "submit": "Create Track",
+      "saving": "Saving..."
+    },
+    "createConcept": {
+      "buttonText": "Add Concept",
+      "title": "Add Concept",
+      "desc": "Add a key concept or topic you need to master.",
+      "nameLabel": "Concept Name *",
+      "namePlaceholder": "e.g. Closure, Dependency Injection",
+      "statusLabel": "Initial Status",
+      "statusNotUnderstood": "Not Understood ❌",
+      "statusGaps": "Explained with Gaps ⚠️",
+      "statusMastered": "Mastered ✅",
+      "cancel": "Cancel",
+      "submit": "Add Concept",
+      "saving": "Saving..."
+    },
+    "checkIn": {
+      "title": "Daily Check-In",
+      "desc": "Record today's progress to keep your streak active. Every entry counts.",
+      "noteLabel": "General Notes",
+      "notePlaceholder": "What did you work on today?",
+      "learnedLabel": "What did you learn?",
+      "learnedPlaceholder": "Key concepts, ideas, or skills picked up...",
+      "feynmanLabel": "Explain Simply (Feynman Technique)",
+      "feynmanPlaceholder": "Explain it like you're teaching someone else — \"Feynman technique\"",
+      "gapsLabel": "Gaps Found",
+      "gapsPlaceholder": "What are you still confused about? What needs more study?",
+      "conceptLabel": "Related Concept (Optional)",
+      "conceptNone": "-- None --",
+      "cancel": "Cancel",
+      "submit": "Submit Check-In",
+      "submitting": "Submitting..."
+    }
+  },
   "tour": {
     "skip": "Skip",
     "back": "Back",

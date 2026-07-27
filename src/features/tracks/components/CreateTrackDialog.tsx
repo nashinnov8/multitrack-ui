@@ -21,7 +21,8 @@ import { Plus, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function CreateTrackDialog() {
-  const t = useTranslations("dashboard");
+  const tDash = useTranslations("dashboard");
+  const t = useTranslations("modals.createTrack");
   const { notifyEvent } = useContinuousTour();
   const [open, setOpen] = useState(false);
   const { mutate: createTrack, isPending } = useCreateTrack();
@@ -59,24 +60,24 @@ export function CreateTrackDialog() {
         className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all"
       >
         <Plus className="w-4 h-4 mr-1.5" />
-        {t("createTrack")}
+        {tDash("createTrack")}
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="bg-white border-slate-200 sm:max-w-[440px] p-6">
           <DialogHeader>
-            <DialogTitle className="text-lg font-bold text-slate-900">Create New Track</DialogTitle>
+            <DialogTitle className="text-lg font-bold text-slate-900">{t("title")}</DialogTitle>
             <DialogDescription className="text-slate-500 text-xs">
-              Define a goal or skill you want to track consistently.
+              {t("desc")}
             </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
             <div className="space-y-1.5">
-              <Label htmlFor="name" className="text-xs font-semibold text-slate-700">Track Name *</Label>
+              <Label htmlFor="name" className="text-xs font-semibold text-slate-700">{t("nameLabel")}</Label>
               <Input
                 id="name"
-                placeholder="e.g. Master React, Read 50 Books"
+                placeholder={t("namePlaceholder")}
                 className="bg-slate-50 border-slate-200 focus:bg-white focus:border-indigo-500 text-sm placeholder:text-slate-400"
                 {...register("name")}
               />
@@ -84,10 +85,10 @@ export function CreateTrackDialog() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="description" className="text-xs font-semibold text-slate-700">Description</Label>
+              <Label htmlFor="description" className="text-xs font-semibold text-slate-700">{t("descLabel")}</Label>
               <Textarea
                 id="description"
-                placeholder="What do you want to achieve?"
+                placeholder={t("descPlaceholder")}
                 rows={3}
                 className="bg-slate-50 border-slate-200 focus:bg-white focus:border-indigo-500 text-sm placeholder:text-slate-400 resize-none"
                 {...register("description")}
@@ -102,7 +103,7 @@ export function CreateTrackDialog() {
                 {...register("isPublic")}
               />
               <Label htmlFor="isPublic" className="font-normal text-xs text-slate-600 cursor-pointer">
-                Make this track public
+                {t("makePublic")}
               </Label>
             </div>
 
@@ -114,7 +115,7 @@ export function CreateTrackDialog() {
                 className="border-slate-200 text-slate-700 hover:bg-slate-50 text-xs"
                 onClick={() => { setOpen(false); reset(); }}
               >
-                Cancel
+                {t("cancel")}
               </Button>
               <Button
                 id="tour-modal-submit-btn"
@@ -124,8 +125,8 @@ export function CreateTrackDialog() {
                 className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs"
               >
                 {isPending
-                  ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />Saving...</>
-                  : "Create Track"}
+                  ? <><Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />{t("saving")}</>
+                  : t("submit")}
               </Button>
             </div>
           </form>

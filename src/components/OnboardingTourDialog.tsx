@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ interface OnboardingTourDialogProps {
 
 export function OnboardingTourDialog({ open, onOpenChange }: OnboardingTourDialogProps) {
   const t = useTranslations("tour");
+  const { startTour } = useContinuousTour();
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
@@ -60,6 +62,8 @@ export function OnboardingTourDialog({ open, onOpenChange }: OnboardingTourDialo
     } catch (e) {}
     onOpenChange(false);
     setCurrentStep(0);
+    // Start continuous tour for new user upon completing modal
+    startTour();
   };
 
   const handleNext = () => {

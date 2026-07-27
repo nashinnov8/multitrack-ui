@@ -4,9 +4,6 @@ import React, { createContext, useContext, useEffect, useState, useCallback, use
 import { usePathname } from "next/navigation";
 import { useLocaleContext } from "@/components/I18nProvider";
 
-// ────────────────────────────────────────────
-// Tour Event Types
-// ────────────────────────────────────────────
 type TourEvent =
   | "OPEN_CREATE_DIALOG"
   | "TRACK_CREATED"
@@ -42,7 +39,8 @@ const ContinuousTourContext = createContext<ContinuousTourContextType>({
 export const useContinuousTour = () => useContext(ContinuousTourContext);
 
 // ────────────────────────────────────────────
-// Pure CSS Spotlight Overlay Component
+// Pixel-Perfect React Spotlight Component
+// Uses requestAnimationFrame to track CSS animations (e.g. fade-up) in real-time
 // ────────────────────────────────────────────
 function SpotlightOverlay({
   step,
@@ -54,47 +52,34 @@ function SpotlightOverlay({
   isVi: boolean;
 }) {
   const [rect, setRect] = useState<DOMRect | null>(null);
-  const popoverRef = useRef<HTMLDivElement>(null);
 
+  // Continuously track target element position to handle CSS fade-up animations & window resizing
   useEffect(() => {
-    const findElement = () => {
+    let animId: number;
+
+    const updatePosition = () => {
       const el = document.querySelector(step.selector);
       if (el) {
-        setRect(el.getBoundingClientRect());
-        // Scroll element into view if needed
-        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        return true;
+        const newRect = el.getBoundingClientRect();
+        setRect((prev) => {
+          if (
+            !prev ||
+            Math.abs(prev.top - newRect.top) > 0.5 ||
+            Math.abs(prev.left - newRect.left) > 0.5 ||
+            Math.abs(prev.width - newRect.width) > 0.5 ||
+            Math.abs(prev.height - newRect.height) > 0.5
+          ) {
+            return newRect;
+          }
+          return prev;
+        });
       }
-      return false;
+      animId = requestAnimationFrame(updatePosition);
     };
 
-    // Try immediately, then retry a few times
-    if (!findElement()) {
-      const timer = setTimeout(findElement, 300);
-      const timer2 = setTimeout(findElement, 600);
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(timer2);
-      };
-    }
+    updatePosition();
+    return () => cancelAnimationFrame(animId);
   }, [step.selector]);
-
-  // Update position on scroll/resize
-  useEffect(() => {
-    if (!rect) return;
-
-    const update = () => {
-      const el = document.querySelector(step.selector);
-      if (el) setRect(el.getBoundingClientRect());
-    };
-
-    window.addEventListener("scroll", update, true);
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update, true);
-      window.removeEventListener("resize", update);
-    };
-  }, [rect, step.selector]);
 
   if (!rect) return null;
 
@@ -106,32 +91,31 @@ function SpotlightOverlay({
     height: rect.height + PAD * 2,
   };
 
-  // Calculate popover position — align right edge to button's right edge
+  // Right-aligned popover position calculation
   let popoverStyle: React.CSSProperties = {};
-  const popoverWidth = 320;
   switch (step.side) {
     case "bottom":
       popoverStyle = {
-        top: cutout.top + cutout.height + 12,
+        top: cutout.top + cutout.height + 8,
         right: Math.max(12, window.innerWidth - (cutout.left + cutout.width)),
       };
       break;
     case "top":
       popoverStyle = {
-        bottom: window.innerHeight - cutout.top + 12,
+        bottom: window.innerHeight - cutout.top + 8,
         right: Math.max(12, window.innerWidth - (cutout.left + cutout.width)),
       };
       break;
     case "left":
       popoverStyle = {
         top: cutout.top,
-        right: window.innerWidth - cutout.left + 12,
+        right: window.innerWidth - cutout.left + 8,
       };
       break;
     case "right":
       popoverStyle = {
         top: cutout.top,
-        left: cutout.left + cutout.width + 12,
+        left: cutout.left + cutout.width + 8,
       };
       break;
   }
@@ -167,7 +151,6 @@ function SpotlightOverlay({
 
       {/* Popover tooltip */}
       <div
-        ref={popoverRef}
         onClick={(e) => e.stopPropagation()}
         className="fixed z-[100001] max-w-80 min-w-64 animate-in fade-in slide-in-from-bottom-1 duration-300"
         style={popoverStyle}
@@ -204,39 +187,18 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
   const stepRef = useRef<number>(-1);
   const [activeStep, setActiveStep] = useState<number>(-1);
   const [isTourActive, setIsTourActive] = useState<boolean>(false);
-  // When a modal is open, spotlight should be hidden but tour stays active
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(true);
 
-  // Restore tour state from localStorage on mount
-  useEffect(() => {
-    try {
-      const savedStep = localStorage.getItem("multitrack_continuous_step");
-      if (savedStep !== null) {
-        const stepNum = parseInt(savedStep, 10);
-        if (stepNum >= 0 && stepNum < 6) {
-          stepRef.current = stepNum;
-          setActiveStep(stepNum);
-          setIsTourActive(true);
-          setIsOverlayVisible(true);
-        }
-      }
-    } catch (e) {}
-  }, []);
+  // NOTE: Tour DOES NOT auto-start on page load for existing users.
+  // It only starts for new accounts or when user manually clicks the navbar Help button.
 
   const saveStep = useCallback((step: number) => {
     stepRef.current = step;
     setActiveStep(step);
     if (step < 0 || step >= 6) {
-      try {
-        localStorage.removeItem("multitrack_continuous_step");
-        localStorage.setItem("multitrack_continuous_completed", "true");
-      } catch (e) {}
       setIsTourActive(false);
       setIsOverlayVisible(false);
     } else {
-      try {
-        localStorage.setItem("multitrack_continuous_step", step.toString());
-      } catch (e) {}
       setIsTourActive(true);
       setIsOverlayVisible(true);
     }
@@ -254,40 +216,39 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
     const current = stepRef.current;
     switch (event) {
       case "OPEN_CREATE_DIALOG":
-        // Hide overlay while user types in Create Track modal
         if (current === 0) {
           saveStep(1);
           setIsOverlayVisible(false);
         }
         break;
+
       case "TRACK_CREATED":
-        // Track created -> show Track Card highlight
         saveStep(2);
         break;
+
       case "ENTERED_TRACK_DETAILS":
-        // Entered track details -> show Add Concept highlight
         if (current === 2 || current === 1) saveStep(3);
         break;
+
       case "OPEN_CONCEPT_DIALOG":
-        // Hide overlay while user types in Concept modal
         setIsOverlayVisible(false);
         break;
+
       case "CONCEPT_CREATED":
-        // Concept created -> show Check-In highlight
         saveStep(4);
         break;
+
       case "OPEN_CHECKIN_DIALOG":
-        // Hide overlay while user types in Check-in modal
         setIsOverlayVisible(false);
         break;
+
       case "CHECKIN_COMPLETED":
-        // Check-in done -> show Gaps highlight
         saveStep(5);
         break;
     }
   }, [saveStep]);
 
-  // Build step config
+  // Build step config based on active step
   const getStepConfig = (): TourStepConfig | null => {
     switch (activeStep) {
       case 0:

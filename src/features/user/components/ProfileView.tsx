@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, Flame, Award, Star, User as UserIcon, Shield, CheckCircle2, Lock } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { format, parseISO } from "date-fns";
+import { useTranslations } from "next-intl";
 
 // Level formula: Min EXP for Level N = N * (N - 1) * 50
 function getLevelExpRange(level: number) {
@@ -14,6 +15,7 @@ function getLevelExpRange(level: number) {
 }
 
 export function ProfileView() {
+  const t = useTranslations("profile");
   const { data: user, isLoading: userLoading, isError: userError } = useUserProfile();
   const { data: userBadges, isLoading: userBadgesLoading } = useUserBadges();
   const { data: allBadges } = useAllBadges();
@@ -82,7 +84,7 @@ export function ProfileView() {
                   <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                   </svg>
-                  Share FB
+                  {t("shareFb")}
                 </button>
 
                 <button
@@ -94,7 +96,7 @@ export function ProfileView() {
                   title="Share to X / Twitter"
                 >
                   <span className="font-extrabold text-[11px]">𝕏</span>
-                  Share
+                  {t("shareX")}
                 </button>
               </div>
             </div>
@@ -103,7 +105,7 @@ export function ProfileView() {
             <div className="mt-4 max-w-md">
               <div className="flex justify-between items-center text-xs font-semibold mb-1">
                 <span className="text-indigo-600 flex items-center gap-1">
-                  <Shield className="w-3.5 h-3.5 fill-indigo-100" /> Level {user.level}
+                  <Shield className="w-3.5 h-3.5 fill-indigo-100" /> {t("level")} {user.level}
                 </span>
                 <span className="text-slate-500 text-[11px]">
                   {user.totalExp} / {nextLevelMinExp} EXP ({progressPercent}%)
@@ -123,21 +125,21 @@ export function ProfileView() {
         <div className="grid grid-cols-3 gap-3 mt-6 pt-5 border-t border-slate-100">
           <div className="flex flex-col items-center justify-center p-3 bg-slate-50 rounded-lg border border-slate-100">
             <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
-              <Shield className="w-3.5 h-3.5 text-indigo-600" /> Level
+              <Shield className="w-3.5 h-3.5 text-indigo-600" /> {t("level")}
             </span>
             <span className="text-lg font-bold text-slate-900 mt-1">{user.level}</span>
           </div>
 
           <div className="flex flex-col items-center justify-center p-3 bg-slate-50 rounded-lg border border-slate-100">
             <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" /> Total EXP
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-400" /> {t("totalExp")}
             </span>
             <span className="text-lg font-bold text-slate-900 mt-1">{user.totalExp}</span>
           </div>
 
           <div className="flex flex-col items-center justify-center p-3 bg-slate-50 rounded-lg border border-slate-100">
             <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-orange-500 fill-orange-400" /> Global Streak
+              <Flame className="w-3.5 h-3.5 text-orange-500 fill-orange-400" /> {t("globalStreak")}
             </span>
             <span className="text-lg font-bold text-slate-900 mt-1">{user.globalStreak} d</span>
           </div>
@@ -149,14 +151,14 @@ export function ProfileView() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Award className="w-4 h-4 text-indigo-600" /> Achievements & Badges
+              <Award className="w-4 h-4 text-indigo-600" /> {t("achievements")}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Badges earned through consistent check-ins and streaks
             </p>
           </div>
           <span className="text-xs font-semibold px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100">
-            {userBadges?.length || 0} Earned
+            {userBadges?.length || 0} {t("earned")}
           </span>
         </div>
 

@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 import {
   Zap,
   Target,
@@ -15,6 +17,9 @@ import {
 } from "lucide-react";
 
 export function LandingView() {
+  const tNav = useTranslations("nav");
+  const tLanding = useTranslations("landing");
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-500 selection:text-white">
       {/* 1. Header / Navigation */}
@@ -31,25 +36,27 @@ export function LandingView() {
 
           <nav className="hidden md:flex items-center space-x-6 text-xs font-medium text-slate-600">
             <a href="#features" className="hover:text-indigo-600 transition-colors">
-              Features
+              {tNav("features")}
             </a>
             <a href="#feynman" className="hover:text-indigo-600 transition-colors">
-              Feynman Method
+              {tNav("feynmanMethod")}
             </a>
             <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">
-              How It Works
+              {tNav("howItWorks")}
             </a>
           </nav>
 
           <div className="flex items-center space-x-2">
+            <LanguageSwitcher />
+
             <Link href="/login">
               <Button variant="ghost" size="sm" className="text-xs font-medium text-slate-700 hover:bg-slate-100">
-                Log In
+                {tNav("login")}
               </Button>
             </Link>
             <Link href="/signup">
               <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-sm">
-                Get Started Free <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                {tNav("getStarted")} <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Button>
             </Link>
           </div>
@@ -62,29 +69,32 @@ export function LandingView() {
           {/* Top Pill Badge */}
           <div className="fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-6">
             <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-            <span>Powered by Feynman Technique & Gamification</span>
+            <span>{tLanding("pill")}</span>
           </div>
 
           {/* H1 Headline */}
           <h1 className="fade-up fade-up-delay-1 text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 max-w-3xl mx-auto leading-tight sm:leading-tight">
-            Master Multiple Skills at Once <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Without Burnout</span>
+            {tLanding("heroTitle1")}{" "}
+            <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+              {tLanding("heroTitle2")}
+            </span>
           </h1>
 
           {/* Subtitle */}
           <p className="fade-up fade-up-delay-2 text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mt-4 leading-relaxed">
-            Track parallel learning goals, identify knowledge gaps with the Feynman Technique, and build unbreakable daily habits with Streaks & EXP rewards.
+            {tLanding("heroSubtitle")}
           </p>
 
           {/* Hero CTAs */}
           <div className="fade-up fade-up-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
             <Link href="/signup" className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm px-6 h-11 shadow-sm transition-all">
-                Start Tracking Free <ArrowRight className="w-4 h-4 ml-2" />
+                {tLanding("startFree")} <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
             <a href="#how-it-works" className="w-full sm:w-auto">
               <Button size="lg" variant="outline" className="w-full sm:w-auto border-slate-200 text-slate-700 hover:bg-slate-100 text-sm h-11">
-                See How It Works
+                {tLanding("seeHowItWorks")}
               </Button>
             </a>
           </div>
@@ -101,7 +111,7 @@ export function LandingView() {
                     <span className="text-xs font-semibold text-slate-400 ml-2">Multitrack App Preview</span>
                   </div>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    🔥 Global Streak: 14 Days
+                    🔥 {tLanding("previewBadge")}
                   </span>
                 </div>
 
@@ -142,10 +152,10 @@ export function LandingView() {
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              Why Traditional Learning Approaches Fail
+              {tLanding("problemTitle")}
             </h2>
             <p className="text-slate-500 text-sm mt-2">
-              Most people give up not due to lack of effort, but due to poor tracking systems and passive learning habits.
+              {tLanding("problemSubtitle")}
             </p>
           </div>
 
@@ -155,16 +165,16 @@ export function LandingView() {
               <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center text-red-600">
                 <span className="font-bold text-sm">✕</span>
               </div>
-              <h3 className="text-base font-bold text-slate-900">Traditional Goal Tracking</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("traditionalTitle")}</h3>
               <ul className="space-y-2 text-xs text-slate-600">
                 <li className="flex items-start gap-2">
-                  <span className="text-red-500">►</span> Passive reading without testing deep comprehension.
+                  <span className="text-red-500">►</span> {tLanding("traditionalPoint1")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-red-500">►</span> Overwhelmed when juggling multiple skills simultaneously.
+                  <span className="text-red-500">►</span> {tLanding("traditionalPoint2")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-red-500">►</span> Lack of daily accountability and habit rewards.
+                  <span className="text-red-500">►</span> {tLanding("traditionalPoint3")}
                 </li>
               </ul>
             </div>
@@ -174,16 +184,16 @@ export function LandingView() {
               <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-600">
                 <Check className="w-4 h-4 stroke-[3]" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">The Multitrack Method</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("multitrackTitle")}</h3>
               <ul className="space-y-2 text-xs text-slate-700">
                 <li className="flex items-start gap-2">
-                  <span className="text-indigo-600">✓</span> Force yourself to explain topics simply to uncover knowledge gaps.
+                  <span className="text-indigo-600">✓</span> {tLanding("multitrackPoint1")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-indigo-600">✓</span> Manage parallel tracks seamlessly without clutter.
+                  <span className="text-indigo-600">✓</span> {tLanding("multitrackPoint2")}
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-indigo-600">✓</span> Gain EXP, protect 🔥 Streaks & get automated mail reminders.
+                  <span className="text-indigo-600">✓</span> {tLanding("multitrackPoint3")}
                 </li>
               </ul>
             </div>
@@ -197,39 +207,39 @@ export function LandingView() {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-semibold mb-3">
               <Brain className="w-3.5 h-3.5" />
-              <span>The Ultimate Learning Technique</span>
+              <span>{tLanding("feynmanBadge")}</span>
             </div>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              The Feynman Method: Learn by Teaching
+              {tLanding("feynmanTitle")}
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2 leading-relaxed">
-              Named after Nobel Prize-winning physicist Richard Feynman. True mastery comes from explaining complex ideas in simple terms.
+              {tLanding("feynmanSubtitle")}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
               <span className="text-xs font-extrabold text-indigo-600">STEP 1</span>
-              <h3 className="text-sm font-bold text-slate-900">Choose a Concept</h3>
-              <p className="text-xs text-slate-500 leading-normal">Select a specific topic you want to master within your track.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("feynmanStep1Title")}</h3>
+              <p className="text-xs text-slate-500 leading-normal">{tLanding("feynmanStep1Desc")}</p>
             </div>
 
             <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
               <span className="text-xs font-extrabold text-indigo-600">STEP 2</span>
-              <h3 className="text-sm font-bold text-slate-900">Explain Simply</h3>
-              <p className="text-xs text-slate-500 leading-normal">Write a check-in note as if teaching it to a 12-year-old child.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("feynmanStep2Title")}</h3>
+              <p className="text-xs text-slate-500 leading-normal">{tLanding("feynmanStep2Desc")}</p>
             </div>
 
             <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
               <span className="text-xs font-extrabold text-amber-600">STEP 3</span>
-              <h3 className="text-sm font-bold text-slate-900">Identify Gaps</h3>
-              <p className="text-xs text-slate-500 leading-normal">Spot where you stumble or use jargon. Those are your knowledge gaps.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("feynmanStep3Title")}</h3>
+              <p className="text-xs text-slate-500 leading-normal">{tLanding("feynmanStep3Desc")}</p>
             </div>
 
             <div className="p-5 rounded-xl bg-white border border-slate-200/80 shadow-sm space-y-2">
               <span className="text-xs font-extrabold text-emerald-600">STEP 4</span>
-              <h3 className="text-sm font-bold text-slate-900">Review & Simplify</h3>
-              <p className="text-xs text-slate-500 leading-normal">Re-read source material and refine your explanation until effortless.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("feynmanStep4Title")}</h3>
+              <p className="text-xs text-slate-500 leading-normal">{tLanding("feynmanStep4Desc")}</p>
             </div>
           </div>
         </div>
@@ -239,9 +249,9 @@ export function LandingView() {
       <section id="features" className="py-16 sm:py-20">
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Powerful Features</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">{tLanding("featuresBadge")}</span>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mt-1">
-              Everything You Need to Master Self-Learning
+              {tLanding("featuresTitle")}
             </h2>
           </div>
 
@@ -251,9 +261,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
                 <Brain className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Feynman Technique Check-in</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("featureFeynmanTitle")}</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Log daily check-ins by explaining concepts as simply as if teaching a beginner. Knowledge gaps (Gaps) surface immediately so you can fix them.
+                {tLanding("featureFeynmanDesc")}
               </p>
             </div>
 
@@ -262,9 +272,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
                 <Flame className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Streak & Level System</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("featureStreakTitle")}</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Earn EXP points on every check-in, level up your profile, and unlock prestigious Badges to maintain unbreakable momentum.
+                {tLanding("featureStreakDesc")}
               </p>
             </div>
 
@@ -273,9 +283,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
                 <Target className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Parallel Track Tracker</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("featureParallelTitle")}</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Track multiple independent goals (English, Coding, Fitness) simultaneously without confusion.
+                {tLanding("featureParallelDesc")}
               </p>
             </div>
 
@@ -284,9 +294,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600">
                 <Mail className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Automated Mail Reminders</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("featureEmailTitle")}</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Our 8 PM daily scheduler scans inactive tracks (&gt;24h) and sends a summary email to protect your Streak.
+                {tLanding("featureEmailDesc")}
               </p>
             </div>
 
@@ -295,9 +305,9 @@ export function LandingView() {
               <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
                 <Share2 className="w-5 h-5" />
               </div>
-              <h3 className="text-base font-bold text-slate-900">Social Media Sharing</h3>
+              <h3 className="text-base font-bold text-slate-900">{tLanding("featureSocialTitle")}</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
-                Share your 🔥 Streak directly to Facebook &amp; X to build public accountability and inspire peers.
+                {tLanding("featureSocialDesc")}
               </p>
             </div>
           </div>
@@ -308,9 +318,9 @@ export function LandingView() {
       <section id="how-it-works" className="py-16 bg-white border-t border-slate-200/80">
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Simple Workflow</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">{tLanding("workflowBadge")}</span>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl mt-1">
-              3 Steps to Master Any Skill
+              {tLanding("workflowTitle")}
             </h2>
           </div>
 
@@ -319,24 +329,24 @@ export function LandingView() {
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-3">
                 1
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Create Learning Track</h3>
-              <p className="text-xs text-slate-500">Define target goals, Milestones, and key Concepts.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("workflowStep1Title")}</h3>
+              <p className="text-xs text-slate-500">{tLanding("workflowStep1Desc")}</p>
             </div>
 
             <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-2">
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-3">
                 2
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Feynman Check-in</h3>
-              <p className="text-xs text-slate-500">Log daily progress and explain concepts in plain English.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("workflowStep2Title")}</h3>
+              <p className="text-xs text-slate-500">{tLanding("workflowStep2Desc")}</p>
             </div>
 
             <div className="p-5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-2">
               <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-3">
                 3
               </div>
-              <h3 className="text-sm font-bold text-slate-900">Level Up & Build Habits</h3>
-              <p className="text-xs text-slate-500">Earn EXP points, increase Level, and maintain habit Streaks.</p>
+              <h3 className="text-sm font-bold text-slate-900">{tLanding("workflowStep3Title")}</h3>
+              <p className="text-xs text-slate-500">{tLanding("workflowStep3Desc")}</p>
             </div>
           </div>
         </div>
@@ -347,15 +357,15 @@ export function LandingView() {
         <div className="container mx-auto max-w-4xl px-4">
           <div className="p-8 sm:p-10 rounded-2xl bg-indigo-600 text-white text-center shadow-lg space-y-4">
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Ready to Master Your Learning Journey?
+              {tLanding("ctaTitle")}
             </h2>
             <p className="text-indigo-100 text-xs sm:text-sm max-w-xl mx-auto">
-              Join Multitrack today. Free forever and no credit card required.
+              {tLanding("ctaSubtitle")}
             </p>
             <div className="pt-2">
               <Link href="/signup">
                 <Button size="lg" className="bg-white hover:bg-slate-100 text-indigo-600 font-bold text-sm px-6 h-11 shadow-sm">
-                  Create Free Account <ArrowRight className="w-4 h-4 ml-2" />
+                  {tLanding("ctaButton")} <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
             </div>

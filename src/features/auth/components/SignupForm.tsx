@@ -7,11 +7,14 @@ import { useRegister } from "../hooks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { AlertCircle, Loader2, MailCheck, CheckCircle2 } from "lucide-react";
+import { AlertCircle, Loader2, MailCheck } from "lucide-react";
 import { useState } from "react";
 
 export function SignupForm() {
+  const t = useTranslations("auth");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
   const { mutate: registerUser, isPending, isError, error } = useRegister();
@@ -37,23 +40,24 @@ export function SignupForm() {
   if (isSubmitted) {
     return (
       <div className="w-full text-center space-y-4 py-2">
+        <div className="flex justify-end">
+          <LanguageSwitcher />
+        </div>
+
         <div className="flex justify-center">
           <div className="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
             <MailCheck className="w-6 h-6" />
           </div>
         </div>
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Check your email</h2>
+          <h2 className="text-lg font-semibold text-slate-900">{t("checkEmailTitle")}</h2>
           <p className="text-slate-500 text-xs mt-1">
-            We've sent a verification link to <span className="font-semibold text-slate-700">{submittedEmail}</span>.
-          </p>
-          <p className="text-slate-400 text-[11px] mt-2">
-            Please click the link in the email to activate your account.
+            {t("checkEmailDesc")}
           </p>
         </div>
         <Link href="/login">
           <Button variant="outline" size="sm" className="w-full border-slate-200 text-slate-700 hover:bg-slate-50 text-xs mt-2">
-            Proceed to Log In →
+            {t("loginButton")} →
           </Button>
         </Link>
       </div>
@@ -62,9 +66,13 @@ export function SignupForm() {
 
   return (
     <div className="w-full space-y-5">
+      <div className="flex justify-end">
+        <LanguageSwitcher />
+      </div>
+
       <div className="text-center space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Create an account</h1>
-        <p className="text-xs text-slate-500">Start tracking your goals today</p>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">{t("signupTitle")}</h1>
+        <p className="text-xs text-slate-500">{t("signupSubtitle")}</p>
       </div>
 
       {isError && (
@@ -78,7 +86,7 @@ export function SignupForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label htmlFor="username" className="text-xs font-semibold text-slate-700">Username</Label>
+            <Label htmlFor="username" className="text-xs font-semibold text-slate-700">{t("username")}</Label>
             <Input
               id="username"
               placeholder="johndoe"
@@ -88,7 +96,7 @@ export function SignupForm() {
             {errors.username && <p className="text-xs text-red-500">{errors.username.message}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="displayName" className="text-xs font-semibold text-slate-700">Display Name</Label>
+            <Label htmlFor="displayName" className="text-xs font-semibold text-slate-700">{t("displayName")}</Label>
             <Input
               id="displayName"
               placeholder="John Doe"
@@ -100,7 +108,7 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-xs font-semibold text-slate-700">Email</Label>
+          <Label htmlFor="email" className="text-xs font-semibold text-slate-700">{t("email")}</Label>
           <Input
             id="email"
             type="email"
@@ -112,11 +120,11 @@ export function SignupForm() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="password" className="text-xs font-semibold text-slate-700">Password</Label>
+          <Label htmlFor="password" className="text-xs font-semibold text-slate-700">{t("password")}</Label>
           <Input
             id="password"
             type="password"
-            placeholder="Min. 6 characters"
+            placeholder="••••••••"
             className="bg-slate-50 border-slate-200 focus:bg-white focus:border-indigo-500 text-sm placeholder:text-slate-400"
             {...register("password")}
           />
@@ -128,14 +136,14 @@ export function SignupForm() {
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all"
           disabled={isPending}
         >
-          {isPending ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Creating account...</> : "Create account"}
+          {isPending ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Loading...</> : t("signupButton")}
         </Button>
       </form>
 
       <p className="text-center text-xs text-slate-500">
-        Already have an account?{" "}
+        {t("hasAccount")}{" "}
         <Link href="/login" className="text-indigo-600 font-semibold hover:underline">
-          Log in
+          {t("loginButton")}
         </Link>
       </p>
     </div>

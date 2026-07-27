@@ -7,11 +7,14 @@ import { useLogin } from "../hooks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AlertCircle, Loader2 } from "lucide-react";
 
 export function LoginForm() {
+  const t = useTranslations("auth");
   const router = useRouter();
   const { mutate: login, isPending, isError, error } = useLogin();
 
@@ -34,9 +37,13 @@ export function LoginForm() {
 
   return (
     <div className="w-full space-y-5">
+      <div className="flex justify-end">
+        <LanguageSwitcher />
+      </div>
+
       <div className="text-center space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Welcome back</h1>
-        <p className="text-xs text-slate-500">Log in to track your learning goals</p>
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900">{t("loginTitle")}</h1>
+        <p className="text-xs text-slate-500">{t("loginSubtitle")}</p>
       </div>
 
       {isError && (
@@ -49,7 +56,7 @@ export function LoginForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-xs font-semibold text-slate-700">Email</Label>
+          <Label htmlFor="email" className="text-xs font-semibold text-slate-700">{t("email")}</Label>
           <Input
             id="email"
             type="email"
@@ -62,10 +69,7 @@ export function LoginForm() {
 
         <div className="space-y-1.5">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="text-xs font-semibold text-slate-700">Password</Label>
-            <Link href="/forgot-password" className="text-xs font-medium text-indigo-600 hover:underline">
-              Forgot password?
-            </Link>
+            <Label htmlFor="password" className="text-xs font-semibold text-slate-700">{t("password")}</Label>
           </div>
           <Input
             id="password"
@@ -82,14 +86,14 @@ export function LoginForm() {
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all"
           disabled={isPending}
         >
-          {isPending ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Logging in...</> : "Log in"}
+          {isPending ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Loading...</> : t("loginButton")}
         </Button>
       </form>
 
       <p className="text-center text-xs text-slate-500">
-        Don't have an account?{" "}
+        {t("noAccount")}{" "}
         <Link href="/signup" className="text-indigo-600 font-semibold hover:underline">
-          Sign up
+          {t("signupButton")}
         </Link>
       </p>
     </div>

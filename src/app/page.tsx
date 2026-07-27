@@ -5,9 +5,11 @@ import { tokenStorage } from "@/lib/token";
 import { LandingView } from "@/features/landing/components/LandingView";
 import { TrackList } from "@/features/tracks/components/TrackList";
 import { CreateTrackDialog } from "@/features/tracks/components/CreateTrackDialog";
+import { useTranslations } from "next-intl";
 import { Layers, Loader2 } from "lucide-react";
 
 export default function HomePage() {
+  const t = useTranslations("dashboard");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -33,11 +35,11 @@ export default function HomePage() {
         <div>
           <div className="flex items-center space-x-1.5 mb-1">
             <Layers className="w-3.5 h-3.5 text-indigo-600" />
-            <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">Goal Tracker</span>
+            <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">{t("subtitleTag")}</span>
           </div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">Dashboard</h1>
+          <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{t("title")}</h1>
           <p className="text-slate-500 text-xs mt-0.5">
-            Monitor learning tracks, keep streaks active, and log daily check-ins.
+            {t("description")}
           </p>
         </div>
         <div className="fade-up fade-up-delay-1 shrink-0">

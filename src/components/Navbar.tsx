@@ -4,13 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { tokenStorage } from "@/lib/token";
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { LogOut, LayoutDashboard, Zap, User } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
   const queryClient = useQueryClient();
+  const t = useTranslations("nav");
   const [hasToken, setHasToken] = useState<boolean>(true);
 
   useEffect(() => {
@@ -58,7 +61,7 @@ export function Navbar() {
               }`}
             >
               <LayoutDashboard className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-              Dashboard
+              {t("dashboard")}
             </Button>
           </Link>
 
@@ -73,21 +76,25 @@ export function Navbar() {
               }`}
             >
               <User className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
-              Profile
+              {t("profile")}
             </Button>
           </Link>
         </nav>
 
-        {/* Logout */}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleLogout}
-          className="text-xs h-8 px-2.5 text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
-        >
-          <LogOut className="w-3.5 h-3.5 mr-1.5" />
-          <span className="hidden sm:inline">Log out</span>
-        </Button>
+        {/* Right side controls: Language Switcher + Logout */}
+        <div className="flex items-center space-x-2">
+          <LanguageSwitcher />
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="text-xs h-8 px-2.5 text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <LogOut className="w-3.5 h-3.5 mr-1.5" />
+            <span className="hidden sm:inline">{t("logout")}</span>
+          </Button>
+        </div>
       </div>
     </header>
   );

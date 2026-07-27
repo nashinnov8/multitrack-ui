@@ -25,6 +25,8 @@ interface ContinuousTourContextType {
   isTourActive: boolean;
   startTour: () => void;
   stopTour: () => void;
+  pauseTour: () => void;
+  resumeTour: () => void;
   notifyEvent: (event: TourEvent) => void;
 }
 
@@ -33,6 +35,8 @@ const ContinuousTourContext = createContext<ContinuousTourContextType>({
   isTourActive: false,
   startTour: () => {},
   stopTour: () => {},
+  pauseTour: () => {},
+  resumeTour: () => {},
   notifyEvent: () => {},
 });
 
@@ -188,9 +192,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
   const [activeStep, setActiveStep] = useState<number>(-1);
   const [isTourActive, setIsTourActive] = useState<boolean>(false);
   const [isOverlayVisible, setIsOverlayVisible] = useState<boolean>(true);
-
-  // NOTE: Tour DOES NOT auto-start on page load for existing users.
-  // It only starts for new accounts or when user manually clicks the navbar Help button.
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const saveStep = useCallback((step: number) => {
     stepRef.current = step;
@@ -211,6 +213,14 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
   const stopTour = useCallback(() => {
     saveStep(-1);
   }, [saveStep]);
+
+  const pauseTour = useCallback(() => {
+    setIsPaused(true);
+  }, []);
+
+  const resumeTour = useCallback(() => {
+    setIsPaused(false);
+  }, []);
 
   const notifyEvent = useCallback((event: TourEvent) => {
     const current = stepRef.current;
@@ -302,7 +312,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
   };
 
   const stepConfig = getStepConfig();
-  const shouldShowOverlay = isTourActive && isOverlayVisible && stepConfig !== null;
+  const shouldShowOverlay = isTourActive && isOverlayVisible && !isPaused && stepConfig !== null;
 
   const handleDismiss = () => {
     setIsOverlayVisible(false);
@@ -310,7 +320,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
 
   return (
     <ContinuousTourContext.Provider
-      value={{ activeStep, isTourActive, startTour, stopTour, notifyEvent }}
+      value={{ activeStep, isTourActive, startTour, stopTour, pauseTour, resumeTour, notifyEvent }}
     >
       {children}
       {shouldShowOverlay && (

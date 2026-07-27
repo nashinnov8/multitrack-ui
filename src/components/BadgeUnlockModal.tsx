@@ -2,18 +2,19 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { useUserBadges } from "@/features/user/hooks";
+import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Award, Sparkles, Share2, CheckCircle2 } from "lucide-react";
+import { Sparkles, Share2, CheckCircle2 } from "lucide-react";
 import { UserBadgeResponse } from "@/features/user/schema";
 
 export function BadgeUnlockModal() {
   const { data: userBadges } = useUserBadges();
+  const { pauseTour, resumeTour } = useContinuousTour();
   const knownBadgeIdsRef = useRef<Set<string> | null>(null);
   const [unlockedBadge, setUnlockedBadge] = useState<UserBadgeResponse | null>(null);
 
@@ -32,15 +33,17 @@ export function BadgeUnlockModal() {
     if (newBadge) {
       // Update known badge IDs
       knownBadgeIdsRef.current.add(newBadge.id);
-      // Trigger popup modal
+      // Trigger popup modal & pause background tour overlay
       setUnlockedBadge(newBadge);
+      pauseTour();
     }
-  }, [userBadges]);
+  }, [userBadges, pauseTour]);
 
   if (!unlockedBadge) return null;
 
   const handleClose = () => {
     setUnlockedBadge(null);
+    resumeTour();
   };
 
   const handleShareFb = () => {

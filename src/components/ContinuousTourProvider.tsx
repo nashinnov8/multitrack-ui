@@ -134,52 +134,31 @@ function SpotlightOverlay({
   }
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 99999,
-        pointerEvents: "auto",
-      }}
-    >
-      {/* Dark overlay with cutout hole using box-shadow */}
+    <div className="fixed inset-0 z-[99999] pointer-events-auto">
+      {/* Dark overlay with cutout hole */}
       <div
+        className="fixed rounded-lg pointer-events-none z-[99999]"
         style={{
-          position: "fixed",
           top: cutout.top,
           left: cutout.left,
           width: cutout.width,
           height: cutout.height,
-          borderRadius: 8,
           boxShadow: "0 0 0 9999px rgba(0, 0, 0, 0.55)",
-          zIndex: 99999,
-          pointerEvents: "none",
         }}
       />
 
-      {/* Clickable overlay areas (dismiss on click outside target) */}
-      <div
-        onClick={onDismiss}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 99998,
-          cursor: "pointer",
-        }}
-      />
+      {/* Clickable overlay area (dismiss on click outside) */}
+      <div onClick={onDismiss} className="fixed inset-0 z-[99998] cursor-pointer" />
 
-      {/* Make the target element clickable through the overlay */}
+      {/* Target element click-through zone */}
       <div
         onClick={onDismiss}
+        className="fixed z-[100000] cursor-pointer rounded-lg"
         style={{
-          position: "fixed",
           top: cutout.top,
           left: cutout.left,
           width: cutout.width,
           height: cutout.height,
-          zIndex: 100000,
-          cursor: "pointer",
-          borderRadius: 8,
         }}
       />
 
@@ -187,74 +166,26 @@ function SpotlightOverlay({
       <div
         ref={popoverRef}
         onClick={(e) => e.stopPropagation()}
-        style={{
-          position: "fixed",
-          ...popoverStyle,
-          zIndex: 100001,
-          maxWidth: 320,
-          minWidth: 260,
-          animation: "tour-fade-in 0.25s ease-out",
-        }}
+        className="fixed z-[100001] max-w-80 min-w-64 animate-in fade-in slide-in-from-bottom-1 duration-300"
+        style={popoverStyle}
       >
-        <div
-          style={{
-            background: "white",
-            borderRadius: 12,
-            padding: "16px 20px",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1)",
-            border: "1px solid rgba(99, 102, 241, 0.2)",
-          }}
-        >
-          <h3
-            style={{
-              margin: "0 0 6px 0",
-              fontSize: 15,
-              fontWeight: 700,
-              color: "#1e293b",
-              lineHeight: 1.3,
-            }}
-          >
+        <div className="bg-white rounded-xl px-5 py-4 shadow-2xl border border-indigo-500/20">
+          <h3 className="mb-1.5 text-[15px] font-bold text-slate-900 leading-snug">
             {step.title}
           </h3>
-          <p
-            style={{
-              margin: "0 0 14px 0",
-              fontSize: 13,
-              color: "#64748b",
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="mb-3.5 text-[13px] text-slate-500 leading-relaxed">
             {step.description}
           </p>
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div className="flex justify-end">
             <button
               onClick={onDismiss}
-              style={{
-                background: "#4f46e5",
-                color: "white",
-                border: "none",
-                borderRadius: 8,
-                padding: "6px 16px",
-                fontSize: 12,
-                fontWeight: 600,
-                cursor: "pointer",
-                transition: "background 0.15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#4338ca")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#4f46e5")}
+              className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-1.5 text-xs font-semibold cursor-pointer transition-colors"
             >
               Đã hiểu ✓
             </button>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes tour-fade-in {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

@@ -204,6 +204,10 @@
       "conceptNone": "-- None --",
       "feynmanHint": "💡 Write 15+ characters to earn full +150 EXP & keep your Streak 🔥",
       "atLeastOneField": "Please fill in at least one field (Notes, What you learned, or Explain Simply)",
+      "aiEvaluateBtn": "🤖 AI Evaluate Explanation",
+      "aiEvaluating": "Analyzing...",
+      "aiScoreRating": "{score}/10 — AI Tutor Rating",
+      "addToGaps": "＋ Add to Gaps",
       "cancel": "Cancel",
       "submit": "Submit Check-In",
       "submitting": "Submitting..."

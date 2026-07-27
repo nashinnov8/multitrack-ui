@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ActivityLogRequest, activityLogRequestSchema } from "../schema";
 import { useLogActivity } from "../hooks";
 import { useConcepts } from "@/features/concepts/hooks";
+import { useEvaluateFeynman } from "@/features/ai/hooks";
+import { FeynmanEvaluationResponse } from "@/features/ai/schema";
 import { useContinuousTour } from "@/components/ContinuousTourProvider";
 import {
   Dialog,
@@ -17,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, Loader2, BookOpen, Lightbulb, AlertTriangle, MessageSquare, CheckCircle2, Tag } from "lucide-react";
+import { AlertCircle, Loader2, BookOpen, Lightbulb, AlertTriangle, MessageSquare, CheckCircle2, Tag, Bot, Sparkles, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type CheckInDialogProps = {
@@ -31,21 +33,47 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
   const { notifyEvent } = useContinuousTour();
   const { mutate: logActivity, isPending } = useLogActivity(trackId || "");
   const { data: concepts } = useConcepts(trackId || "");
-  const [formError, setFormError] = useState<string | null>(null);
+  const { mutate: evaluateFeynman, isPending: isAiEvaluating } = useEvaluateFeynman();
 
-  const { register, handleSubmit, reset } = useForm<ActivityLogRequest>({
+  const [formError, setFormError] = useState<string | null>(null);
+  const [aiResult, setAiResult] = useState<FeynmanEvaluationResponse | null>(null);
+
+  const { register, handleSubmit, reset, watch, setValue } = useForm<ActivityLogRequest>({
     resolver: zodResolver(activityLogRequestSchema),
     defaultValues: { note: "", whatLearned: "", explainSimply: "", gapsFound: "", conceptId: undefined },
   });
+
+  const watchExplain = watch("explainSimply");
+  const watchNote = watch("note");
+  const watchLearned = watch("whatLearned");
+  const watchConceptId = watch("conceptId");
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
       onClose();
       reset();
       setFormError(null);
+      setAiResult(null);
     } else {
       notifyEvent("OPEN_CHECKIN_DIALOG");
     }
+  };
+
+  const handleAiEvaluate = () => {
+    const selectedConcept = concepts?.find((c) => c.id === watchConceptId);
+    evaluateFeynman(
+      {
+        conceptName: selectedConcept?.name,
+        explainSimply: watchExplain,
+        whatLearned: watchLearned,
+        note: watchNote,
+      },
+      {
+        onSuccess: (data) => {
+          setAiResult(data);
+        },
+      }
+    );
   };
 
   const onSubmit = (data: ActivityLogRequest) => {
@@ -70,6 +98,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
         onClose();
         reset();
         setFormError(null);
+        setAiResult(null);
         notifyEvent("CHECKIN_COMPLETED");
       },
       onError: (err: any) => {
@@ -107,7 +136,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="bg-white border-slate-200 sm:max-w-[500px] max-h-[90vh] overflow-y-auto p-6">
+      <DialogContent className="bg-white border-slate-200 sm:max-w-[520px] max-h-[90vh] overflow-y-auto p-6">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-1">
             <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
@@ -154,10 +183,29 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
             const Icon = field.icon;
             return (
               <div key={field.id} className="space-y-1.5">
-                <Label htmlFor={field.id} className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
-                  <Icon className="w-3.5 h-3.5 text-slate-400" />
-                  {field.label}
-                </Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor={field.id} className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                    <Icon className="w-3.5 h-3.5 text-slate-400" />
+                    {field.label}
+                  </Label>
+
+                  {/* AI Evaluate Button */}
+                  {field.id === "explainSimply" && (
+                    <button
+                      type="button"
+                      disabled={isAiEvaluating || !watchExplain || watchExplain.trim().length === 0}
+                      onClick={handleAiEvaluate}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-600 hover:text-indigo-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    >
+                      {isAiEvaluating ? (
+                        <><Loader2 className="w-3 h-3 animate-spin text-indigo-600" /> {t("aiEvaluating")}</>
+                      ) : (
+                        <><Bot className="w-3.5 h-3.5 text-indigo-600" /> {t("aiEvaluateBtn")}</>
+                      )}
+                    </button>
+                  )}
+                </div>
+
                 <Textarea
                   id={field.id}
                   placeholder={field.placeholder}
@@ -165,10 +213,48 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
                   className="bg-slate-50 border-slate-200 focus:bg-white focus:border-indigo-500 text-sm placeholder:text-slate-400 resize-none"
                   {...register(field.id as any)}
                 />
+
                 {field.id === "explainSimply" && (
                   <p className="text-[11px] text-indigo-600 font-medium mt-0.5">
                     {t("feynmanHint")}
                   </p>
+                )}
+
+                {/* AI Tutor Assessment Result Card */}
+                {field.id === "explainSimply" && aiResult && (
+                  <div className="mt-2.5 p-3.5 rounded-xl bg-gradient-to-br from-indigo-50/80 via-purple-50/50 to-white border border-indigo-100 shadow-xs space-y-2 animate-in fade-in duration-300">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-indigo-700 bg-indigo-100/80 px-2.5 py-0.5 rounded-full">
+                        <Sparkles className="w-3 h-3 text-indigo-600 animate-spin" />
+                        {t("aiScoreRating", { score: aiResult.score })}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-slate-700 leading-relaxed font-medium">
+                      {aiResult.feedback}
+                    </p>
+
+                    {aiResult.jargonWarning && (
+                      <div className="text-[11px] text-amber-800 bg-amber-50 p-2 rounded-lg border border-amber-200/60">
+                        ⚠️ {aiResult.jargonWarning}
+                      </div>
+                    )}
+
+                    {aiResult.suggestedGap && (
+                      <div className="flex items-center justify-between gap-2 text-[11px] text-indigo-900 bg-indigo-100/40 p-2 rounded-lg border border-indigo-200/50">
+                        <span className="min-w-0 truncate">💡 <strong>Gợi ý Lỗ hổng:</strong> {aiResult.suggestedGap}</span>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setValue("gapsFound", aiResult.suggestedGap)}
+                          className="h-6 text-[10px] font-bold text-indigo-700 hover:bg-indigo-200/60 px-2 shrink-0"
+                        >
+                          <Plus className="w-3 h-3 mr-0.5" /> {t("addToGaps")}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             );

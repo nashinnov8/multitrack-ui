@@ -204,6 +204,10 @@
       "conceptNone": "-- Không chọn --",
       "feynmanHint": "💡 Viết từ 15 ký tự trở lên để nhận trọn vẹn +150 EXP & duy trì Streak 🔥",
       "atLeastOneField": "Vui lòng nhập ít nhất 1 thông tin (Ghi chú, Bài học, hoặc Lời giải thích)",
+      "aiEvaluateBtn": "🤖 AI Chấm Điểm Lời Giải Thích",
+      "aiEvaluating": "Đang phân tích...",
+      "aiScoreRating": "{score}/10 — Trợ Lý AI Chấm Điểm",
+      "addToGaps": "＋ Thêm vào ô Lỗ hổng",
       "cancel": "Hủy",
       "submit": "Nộp bài Điểm danh",
       "submitting": "Đang nộp..."

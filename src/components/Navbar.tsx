@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { LogOut, LayoutDashboard, Zap, User } from "lucide-react";
+import { LogOut, LayoutDashboard, Zap, User, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function Navbar() {
@@ -77,6 +77,21 @@ export function Navbar() {
             >
               <User className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
               {t("profile")}
+            </Button>
+          </Link>
+
+          <Link href="/guide">
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`text-xs font-medium h-8 px-3 ${
+                pathname === "/guide"
+                  ? "bg-slate-100 text-slate-900"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5 mr-1.5 text-slate-500" />
+              {t("guide")}
             </Button>
           </Link>
         </nav>

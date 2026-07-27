@@ -44,6 +44,9 @@ export function LandingView() {
             <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">
               {tNav("howItWorks")}
             </a>
+            <Link href="/guide" className="hover:text-indigo-600 transition-colors">
+              {tNav("guide")}
+            </Link>
           </nav>
 
           <div className="flex items-center space-x-2">

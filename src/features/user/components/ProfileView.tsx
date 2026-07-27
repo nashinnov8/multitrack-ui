@@ -104,9 +104,9 @@ export function ProfileView() {
                   disabled={isBuyingFreeze || user.totalExp < 500}
                   onClick={() => buyStreakFreeze()}
                   className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-xs shadow-xs transition-colors"
-                  title="Mua 1 Khiên Bảo Vệ Streak (500 EXP)"
+                  title={t("buyFreeze")}
                 >
-                  <span>🧊</span> {isBuyingFreeze ? "Đang mua..." : "Mua Khiên (500 EXP)"}
+                  <span>🧊</span> {isBuyingFreeze ? t("buyingFreeze") : t("buyFreeze")}
                 </button>
               </div>
             </div>
@@ -156,7 +156,7 @@ export function ProfileView() {
 
           <div className="flex flex-col items-center justify-center p-3 bg-cyan-50/60 rounded-lg border border-cyan-100 relative group">
             <span className="text-xs text-cyan-700 font-medium flex items-center gap-1">
-              <span>🧊</span> Khiên Streak
+              <span>🧊</span> {t("streakFreeze")}
             </span>
             <span className="text-lg font-bold text-cyan-950 mt-1">{user.streakFreezeCount ?? 0}</span>
           </div>

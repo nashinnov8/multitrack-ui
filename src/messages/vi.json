@@ -100,7 +100,10 @@
     "noBadges": "Chưa có huy hiệu nào. Hãy tiếp tục điểm danh hàng ngày để mở khóa thành tựu!",
     "earned": "Đã đạt",
     "shareFb": "Chia sẻ FB",
-    "shareX": "Chia sẻ"
+    "shareX": "Chia sẻ",
+    "streakFreeze": "Khiên Streak",
+    "buyFreeze": "Mua Khiên (500 EXP)",
+    "buyingFreeze": "Đang mua..."
   },
   "tracks": {
     "streakDays": "Streak {days} ngày",

@@ -100,7 +100,10 @@
     "noBadges": "No badges available yet. Keep checking in to earn achievements!",
     "earned": "Earned",
     "shareFb": "Share FB",
-    "shareX": "Share"
+    "shareX": "Share",
+    "streakFreeze": "Streak Freeze",
+    "buyFreeze": "Buy Freeze (500 EXP)",
+    "buyingFreeze": "Buying..."
   },
   "tracks": {
     "streakDays": "{days} days streak",

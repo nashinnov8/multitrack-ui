@@ -34,3 +34,10 @@ export const badgeResponseSchema = z.object({
 });
 
 export type BadgeResponse = z.infer<typeof badgeResponseSchema>;
+
+export const activityHeatmapDaySchema = z.object({
+  date: z.string(),
+  count: z.number(),
+});
+
+export type ActivityHeatmapDayResponse = z.infer<typeof activityHeatmapDaySchema>;

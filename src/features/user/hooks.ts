@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getUserProfile, getUserBadges, getAllBadges, buyStreakFreeze } from "./api";
+import { getUserProfile, getUserBadges, getAllBadges, buyStreakFreeze, getUserActivityHeatmap } from "./api";
 
 export const userKeys = {
   all: ["user"] as const,
   profile: (userId?: string) => [...userKeys.all, "profile", userId] as const,
   badges: (userId?: string) => [...userKeys.all, "badges", userId] as const,
   allBadges: () => ["badges", "all"] as const,
+  heatmap: (userId?: string) => [...userKeys.all, "heatmap", userId] as const,
 };
 
 export const useUserProfile = (userId?: string) => {
@@ -26,6 +27,13 @@ export const useAllBadges = () => {
   return useQuery({
     queryKey: userKeys.allBadges(),
     queryFn: getAllBadges,
+  });
+};
+
+export const useUserActivityHeatmap = (userId?: string) => {
+  return useQuery({
+    queryKey: userKeys.heatmap(userId),
+    queryFn: () => getUserActivityHeatmap(userId),
   });
 };
 

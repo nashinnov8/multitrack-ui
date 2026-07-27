@@ -103,7 +103,12 @@
     "shareX": "Share",
     "streakFreeze": "Streak Freeze",
     "buyFreeze": "Buy Freeze (500 EXP)",
-    "buyingFreeze": "Buying..."
+    "buyingFreeze": "Buying...",
+    "heatmapTitle": "365-Day Activity Heatmap",
+    "heatmapSubtitle": "{count} check-ins in the last year",
+    "checkIns": "check-ins",
+    "heatmapLess": "Less",
+    "heatmapMore": "More"
   },
   "tracks": {
     "streakDays": "{days} days streak",

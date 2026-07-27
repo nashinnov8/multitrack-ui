@@ -1,5 +1,5 @@
 import { apiClient } from "@/lib/api-client";
-import { BadgeResponse, UserBadgeResponse, UserResponse } from "./schema";
+import { ActivityHeatmapDayResponse, BadgeResponse, UserBadgeResponse, UserResponse } from "./schema";
 
 // Decode userId from JWT payload
 export function getUserIdFromToken(): string | null {
@@ -35,4 +35,10 @@ export const buyStreakFreeze = async (userId?: string): Promise<UserResponse> =>
   const id = userId || getUserIdFromToken();
   if (!id) throw new Error("User ID not found");
   return apiClient.post(`/users/${id}/buy-streak-freeze`);
+};
+
+export const getUserActivityHeatmap = async (userId?: string): Promise<ActivityHeatmapDayResponse[]> => {
+  const id = userId || getUserIdFromToken();
+  if (!id) throw new Error("User ID not found");
+  return apiClient.get(`/users/${id}/activity-heatmap`);
 };

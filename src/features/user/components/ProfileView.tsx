@@ -1,6 +1,7 @@
 "use client";
 
-import { useUserProfile, useUserBadges, useAllBadges, useBuyStreakFreeze } from "../hooks";
+import { useUserProfile, useUserBadges, useAllBadges, useBuyStreakFreeze, useUserActivityHeatmap } from "../hooks";
+import { ContributionHeatmap } from "./ContributionHeatmap";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, Flame, Award, Star, User as UserIcon, Shield, CheckCircle2, Lock } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -19,6 +20,7 @@ export function ProfileView() {
   const { data: user, isLoading: userLoading, isError: userError } = useUserProfile();
   const { data: userBadges, isLoading: userBadgesLoading } = useUserBadges();
   const { data: allBadges } = useAllBadges();
+  const { data: heatmapData, isLoading: heatmapLoading } = useUserActivityHeatmap();
   const { mutate: buyStreakFreeze, isPending: isBuyingFreeze } = useBuyStreakFreeze();
 
   if (userLoading) {
@@ -162,6 +164,9 @@ export function ProfileView() {
           </div>
         </div>
       </div>
+
+      {/* GitHub-Style 365-Day Activity Heatmap */}
+      <ContributionHeatmap data={heatmapData} isLoading={heatmapLoading} />
 
       {/* Achievements / Badges Section */}
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">

@@ -103,7 +103,12 @@
     "shareX": "Chia sẻ",
     "streakFreeze": "Khiên Streak",
     "buyFreeze": "Mua Khiên (500 EXP)",
-    "buyingFreeze": "Đang mua..."
+    "buyingFreeze": "Đang mua...",
+    "heatmapTitle": "Nhật ký Hoạt động 365 Ngày",
+    "heatmapSubtitle": "{count} lượt điểm danh trong 1 năm qua",
+    "checkIns": "lượt điểm danh",
+    "heatmapLess": "Ít hơn",
+    "heatmapMore": "Nhiều hơn"
   },
   "tracks": {
     "streakDays": "Streak {days} ngày",

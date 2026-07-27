@@ -194,6 +194,8 @@
       "gapsPlaceholder": "Bạn còn chưa rõ chỗ nào? Cần ôn lại kiến thức gì?",
       "conceptLabel": "Khái niệm liên quan (Tùy chọn)",
       "conceptNone": "-- Không chọn --",
+      "feynmanHint": "💡 Viết từ 15 ký tự trở lên để nhận trọn vẹn +150 EXP & duy trì Streak 🔥",
+      "atLeastOneField": "Vui lòng nhập ít nhất 1 thông tin (Ghi chú, Bài học, hoặc Lời giải thích)",
       "cancel": "Hủy",
       "submit": "Nộp bài Điểm danh",
       "submitting": "Đang nộp..."

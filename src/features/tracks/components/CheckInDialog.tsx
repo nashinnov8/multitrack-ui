@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ActivityLogRequest, activityLogRequestSchema } from "../schema";
@@ -16,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Loader2, BookOpen, Lightbulb, AlertTriangle, MessageSquare, CheckCircle2, Tag } from "lucide-react";
+import { AlertCircle, Loader2, BookOpen, Lightbulb, AlertTriangle, MessageSquare, CheckCircle2, Tag } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type CheckInDialogProps = {
@@ -30,6 +31,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
   const { notifyEvent } = useContinuousTour();
   const { mutate: logActivity, isPending } = useLogActivity(trackId || "");
   const { data: concepts } = useConcepts(trackId || "");
+  const [formError, setFormError] = useState<string | null>(null);
 
   const { register, handleSubmit, reset } = useForm<ActivityLogRequest>({
     resolver: zodResolver(activityLogRequestSchema),
@@ -37,17 +39,41 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
   });
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) { onClose(); reset(); }
-    else { notifyEvent("OPEN_CHECKIN_DIALOG"); }
+    if (!open) {
+      onClose();
+      reset();
+      setFormError(null);
+    } else {
+      notifyEvent("OPEN_CHECKIN_DIALOG");
+    }
   };
 
   const onSubmit = (data: ActivityLogRequest) => {
     if (!trackId) return;
+
+    // Validation Check: At least ONE field must be filled
+    const hasContent =
+      (data.note && data.note.trim().length > 0) ||
+      (data.whatLearned && data.whatLearned.trim().length > 0) ||
+      (data.explainSimply && data.explainSimply.trim().length > 0) ||
+      (data.gapsFound && data.gapsFound.trim().length > 0);
+
+    if (!hasContent) {
+      setFormError(t("atLeastOneField"));
+      return;
+    }
+
+    setFormError(null);
+
     logActivity(data, {
       onSuccess: () => {
         onClose();
         reset();
+        setFormError(null);
         notifyEvent("CHECKIN_COMPLETED");
+      },
+      onError: (err: any) => {
+        setFormError(err?.message || "Failed to submit check-in");
       },
     });
   };
@@ -94,6 +120,13 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
           </DialogDescription>
         </DialogHeader>
 
+        {formError && (
+          <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+            <span>{formError}</span>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
           {/* Related Concept Selector */}
           {concepts && concepts.length > 0 && (
@@ -134,7 +167,7 @@ export function CheckInDialog({ trackId, isOpen, onClose }: CheckInDialogProps) 
                 />
                 {field.id === "explainSimply" && (
                   <p className="text-[11px] text-indigo-600 font-medium mt-0.5">
-                    💡 Viết từ 15 ký tự trở lên để nhận trọn vẹn +150 EXP & duy trì Streak 🔥
+                    {t("feynmanHint")}
                   </p>
                 )}
               </div>

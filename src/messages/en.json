@@ -194,6 +194,8 @@
       "gapsPlaceholder": "What are you still confused about? What needs more study?",
       "conceptLabel": "Related Concept (Optional)",
       "conceptNone": "-- None --",
+      "feynmanHint": "💡 Write 15+ characters to earn full +150 EXP & keep your Streak 🔥",
+      "atLeastOneField": "Please fill in at least one field (Notes, What you learned, or Explain Simply)",
       "cancel": "Cancel",
       "submit": "Submit Check-In",
       "submitting": "Submitting..."

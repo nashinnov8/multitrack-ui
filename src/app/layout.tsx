@@ -5,6 +5,7 @@ import Providers from "@/components/Providers";
 import { I18nProvider } from "@/components/I18nProvider";
 import { ContinuousTourProvider } from "@/components/ContinuousTourProvider";
 import { Navbar } from "@/components/Navbar";
+import { BadgeUnlockModal } from "@/components/BadgeUnlockModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,6 +40,7 @@ export default function RootLayout({
               <main className="flex-1">
                 {children}
               </main>
+              <BadgeUnlockModal />
             </Providers>
           </ContinuousTourProvider>
         </I18nProvider>

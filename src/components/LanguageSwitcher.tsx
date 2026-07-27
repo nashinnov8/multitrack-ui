@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 function VietnamFlag() {
   return (
-    <svg className="w-[18px] h-[12px] rounded-[2px] shrink-0 block border border-black/10 overflow-hidden" viewBox="0 0 30 20" fill="none">
+    <svg className="w-[18px] h-[12px] rounded-[2px] shrink-0 block overflow-hidden" viewBox="0 0 30 20" fill="none">
       <rect width="30" height="20" fill="#DA251D" />
       <polygon
         fill="#FFFF00"
@@ -17,7 +17,7 @@ function VietnamFlag() {
 
 function UKFlag() {
   return (
-    <svg className="w-[18px] h-[12px] rounded-[2px] shrink-0 block border border-black/10 overflow-hidden" viewBox="0 0 60 30" fill="none">
+    <svg className="w-[18px] h-[12px] rounded-[2px] shrink-0 block overflow-hidden" viewBox="0 0 60 30" fill="none">
       <clipPath id="uk-clip">
         <rect width="60" height="30" />
       </clipPath>

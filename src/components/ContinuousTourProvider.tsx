@@ -96,7 +96,7 @@ function SpotlightOverlay({
 
   if (!rect) return null;
 
-  const PAD = 8;
+  const PAD = 4;
   const cutout = {
     top: rect.top - PAD,
     left: rect.left - PAD,
@@ -104,19 +104,20 @@ function SpotlightOverlay({
     height: rect.height + PAD * 2,
   };
 
-  // Calculate popover position
+  // Calculate popover position — align right edge to button's right edge
   let popoverStyle: React.CSSProperties = {};
+  const popoverWidth = 320;
   switch (step.side) {
     case "bottom":
       popoverStyle = {
         top: cutout.top + cutout.height + 12,
-        left: Math.max(12, Math.min(cutout.left, window.innerWidth - 340)),
+        right: Math.max(12, window.innerWidth - (cutout.left + cutout.width)),
       };
       break;
     case "top":
       popoverStyle = {
         bottom: window.innerHeight - cutout.top + 12,
-        left: Math.max(12, Math.min(cutout.left, window.innerWidth - 340)),
+        right: Math.max(12, window.innerWidth - (cutout.left + cutout.width)),
       };
       break;
     case "left":

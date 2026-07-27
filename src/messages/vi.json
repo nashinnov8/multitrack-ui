@@ -66,7 +66,12 @@
     "subtitleTag": "Quản lý mục tiêu",
     "title": "Bảng điều khiển",
     "description": "Theo dõi lộ trình học tập, duy trì chuỗi Streak và điểm danh hàng ngày.",
-    "createTrack": "Tạo lộ trình mới"
+    "createTrack": "Tạo lộ trình mới",
+    "noTracksTitle": "Chưa có lộ trình nào",
+    "noTracksDesc": "Bắt đầu theo dõi mục tiêu bằng cách bấm nút Tạo lộ trình mới ở trên.",
+    "prev": "Trước",
+    "next": "Sau",
+    "pageOf": "Trang {current} / {total}"
   },
   "auth": {
     "loginTitle": "Chào mừng trở lại",
@@ -90,8 +95,19 @@
     "totalExp": "Tổng EXP",
     "globalStreak": "Streak Tổng",
     "achievements": "Thành tựu & Huy hiệu",
+    "achievementsSubtitle": "Bộ huy hiệu đạt được thông qua các lượt điểm danh và duy trì chuỗi streak",
+    "noBadges": "Chưa có huy hiệu nào. Hãy tiếp tục điểm danh hàng ngày để mở khóa thành tựu!",
     "earned": "Đã đạt",
     "shareFb": "Chia sẻ FB",
     "shareX": "Chia sẻ"
+  },
+  "tracks": {
+    "streakDays": "Streak {days} ngày",
+    "checkIn": "Điểm danh",
+    "details": "Chi tiết",
+    "overdue": "Cần điểm danh",
+    "statusActive": "Đang học",
+    "statusPaused": "Tạm dừng",
+    "statusCompleted": "Hoàn thành"
   }
 }

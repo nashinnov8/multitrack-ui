@@ -9,8 +9,10 @@ import { useState } from "react";
 import { CheckInDialog } from "./CheckInDialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight as ChevronRightIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function TrackList() {
+  const t = useTranslations("dashboard");
   const [page, setPage] = useState(0);
   const size = 12;
   const { data, isLoading, isError, error } = useTracks(page, size);
@@ -47,9 +49,9 @@ export function TrackList() {
         <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3 text-slate-400">
           <Target className="w-6 h-6" />
         </div>
-        <h3 className="text-base font-semibold text-slate-900 mb-1">No tracks found</h3>
+        <h3 className="text-base font-semibold text-slate-900 mb-1">{t("noTracksTitle")}</h3>
         <p className="text-slate-500 text-sm max-w-sm mx-auto">
-          Start tracking your goals and skills by creating your first track above.
+          {t("noTracksDesc")}
         </p>
       </div>
     );
@@ -78,10 +80,10 @@ export function TrackList() {
             onClick={() => setPage((p) => p - 1)}
             className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 text-xs h-8 px-3"
           >
-            <ChevronLeft className="w-3.5 h-3.5 mr-1" /> Prev
+            <ChevronLeft className="w-3.5 h-3.5 mr-1" /> {t("prev")}
           </Button>
           <span className="text-xs text-slate-500 font-medium px-2">
-            Page {page + 1} of {data?.totalPages}
+            {t("pageOf", { current: page + 1, total: data?.totalPages ?? 1 })}
           </span>
           <Button
             size="sm"
@@ -90,7 +92,7 @@ export function TrackList() {
             onClick={() => setPage((p) => p + 1)}
             className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 text-xs h-8 px-3"
           >
-            Next <ChevronRightIcon className="w-3.5 h-3.5 ml-1" />
+            {t("next")} <ChevronRightIcon className="w-3.5 h-3.5 ml-1" />
           </Button>
         </div>
       )}

@@ -66,7 +66,12 @@
     "subtitleTag": "Goal Tracker",
     "title": "Dashboard",
     "description": "Monitor learning tracks, keep streaks active, and log daily check-ins.",
-    "createTrack": "Create New Track"
+    "createTrack": "Create New Track",
+    "noTracksTitle": "No tracks found",
+    "noTracksDesc": "Start tracking your goals and skills by creating your first track above.",
+    "prev": "Prev",
+    "next": "Next",
+    "pageOf": "Page {current} of {total}"
   },
   "auth": {
     "loginTitle": "Welcome back",
@@ -90,8 +95,19 @@
     "totalExp": "Total EXP",
     "globalStreak": "Global Streak",
     "achievements": "Achievements & Badges",
+    "achievementsSubtitle": "Badges earned through consistent check-ins and streaks",
+    "noBadges": "No badges available yet. Keep checking in to earn achievements!",
     "earned": "Earned",
     "shareFb": "Share FB",
     "shareX": "Share"
+  },
+  "tracks": {
+    "streakDays": "{days} days streak",
+    "checkIn": "Check-in",
+    "details": "Details",
+    "overdue": "Check-in needed",
+    "statusActive": "Active",
+    "statusPaused": "Paused",
+    "statusCompleted": "Completed"
   }
 }

@@ -17,8 +17,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Plus, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function CreateTrackDialog() {
+  const t = useTranslations("dashboard");
   const [open, setOpen] = useState(false);
   const { mutate: createTrack, isPending } = useCreateTrack();
 
@@ -45,7 +47,7 @@ export function CreateTrackDialog() {
         className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition-all"
       >
         <Plus className="w-4 h-4 mr-1.5" />
-        New Track
+        {t("createTrack")}
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>

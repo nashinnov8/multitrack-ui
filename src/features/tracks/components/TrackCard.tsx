@@ -9,6 +9,7 @@ import { isStale } from "@/lib/utils";
 import { Clock, CheckCircle2, ChevronRight, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import { useTranslations } from "next-intl";
 
 type TrackCardProps = {
   track: TrackResponse;
@@ -16,6 +17,7 @@ type TrackCardProps = {
 };
 
 export function TrackCard({ track, onCheckIn }: TrackCardProps) {
+  const t = useTranslations("tracks");
   const stale = isStale(track.lastActivityAt);
   const hasStreak = track.currentStreak > 0;
   const { mutate: deleteTrack, isPending: isDeleting } = useDeleteTrack();
@@ -58,7 +60,7 @@ export function TrackCard({ track, onCheckIn }: TrackCardProps) {
             <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
               stale ? "badge-stale" : "badge-active"
             }`}>
-              {stale ? "Stale" : "Active"}
+              {stale ? t("overdue") : t("statusActive")}
             </span>
             <button
               onClick={handleDeleteClick}
@@ -110,7 +112,7 @@ export function TrackCard({ track, onCheckIn }: TrackCardProps) {
             onClick={() => onCheckIn(track.id)}
           >
             <CheckCircle2 className="w-3 h-3 mr-1 text-indigo-600" />
-            Check In
+            {t("checkIn")}
           </Button>
           <Link href={`/tracks/${track.id}`}>
             <Button size="sm" variant="ghost" className="h-7 px-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100">

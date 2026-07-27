@@ -154,7 +154,7 @@ export function ProfileView() {
               <Award className="w-4 h-4 text-indigo-600" /> {t("achievements")}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Badges earned through consistent check-ins and streaks
+              {t("achievementsSubtitle")}
             </p>
           </div>
           <span className="text-xs font-semibold px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100">
@@ -185,7 +185,7 @@ export function ProfileView() {
                     <span className="text-[10px] text-indigo-600 font-semibold">+{ub.expReward} EXP</span>
                   </div>
                   <p className="text-[10px] text-slate-400 mt-0.5">
-                    Earned {format(parseISO(ub.earnedAt), "MMM d, yyyy")}
+                    {t("earned")} {format(parseISO(ub.earnedAt), "MMM d, yyyy")}
                   </p>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export function ProfileView() {
 
             {(!userBadges || userBadges.length === 0) && (!allBadges || allBadges.length === 0) && (
               <p className="text-xs text-slate-400 italic py-4 col-span-3 text-center">
-                No badges available yet. Keep checking in to earn achievements!
+                {t("noBadges")}
               </p>
             )}
           </div>

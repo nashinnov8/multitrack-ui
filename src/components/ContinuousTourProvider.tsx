@@ -47,9 +47,11 @@ export const useContinuousTour = () => useContext(ContinuousTourContext);
 function SpotlightOverlay({
   step,
   onDismiss,
+  isVi,
 }: {
   step: TourStepConfig;
   onDismiss: () => void;
+  isVi: boolean;
 }) {
   const [rect, setRect] = useState<DOMRect | null>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -182,7 +184,7 @@ function SpotlightOverlay({
               onClick={onDismiss}
               className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-1.5 text-xs font-semibold cursor-pointer transition-colors"
             >
-              Đã hiểu ✓
+              {isVi ? "Đã hiểu ✓" : "Got it ✓"}
             </button>
           </div>
         </div>
@@ -351,7 +353,7 @@ export function ContinuousTourProvider({ children }: { children: React.ReactNode
     >
       {children}
       {shouldShowOverlay && (
-        <SpotlightOverlay step={stepConfig} onDismiss={handleDismiss} />
+        <SpotlightOverlay step={stepConfig} onDismiss={handleDismiss} isVi={isVi} />
       )}
     </ContinuousTourContext.Provider>
   );

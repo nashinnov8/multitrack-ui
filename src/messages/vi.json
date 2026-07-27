@@ -111,6 +111,37 @@
     "statusPaused": "Tạm dừng",
     "statusCompleted": "Hoàn thành"
   },
+  "trackDetail": {
+    "backToDashboard": "Quay lại Bảng điều khiển",
+    "noDesc": "Chưa có mô tả.",
+    "checkInNow": "Check-In ngay",
+    "deleteTrack": "Xóa Lộ Trình",
+    "currentStreak": "🔥 Chuỗi Streak: {count}",
+    "bestStreak": "⭐ Kỷ lục Streak: {count}",
+    "viewGaps": "Xem Lỗ hổng Kiến thức →",
+    "milestonesTitle": "Cột mốc (Milestones)",
+    "milestonesDesc": "Các mục tiêu nhỏ cần hoàn thành",
+    "addMilestone": "Thêm Cột mốc",
+    "noMilestones": "Chưa có cột mốc nào được tạo.",
+    "deleteMilestone": "Xóa Cột mốc",
+    "conceptsTitle": "Khái niệm (Concepts)",
+    "conceptsDesc": "Chủ đề cốt lõi & kiến thức quan trọng",
+    "addConcept": "Thêm Khái niệm",
+    "noConcepts": "Chưa có khái niệm nào được tạo.",
+    "deleteConcept": "Xóa Khái niệm",
+    "timelineTitle": "Nhật ký Hoạt động",
+    "timelineDesc": "Lịch sử điểm danh hàng ngày, ghi chú & bài viết Feynman",
+    "noLogs": "Chưa có lượt điểm danh nào.",
+    "noLogsPrompt": "Bấm \"Check-In ngay\" ở trên để ghi lại lượt đầu tiên!",
+    "learned": "Đã học được:",
+    "gap": "Lỗ hổng phát hiện:",
+    "statusNotUnderstood": "Chưa hiểu ❌",
+    "statusGaps": "Lỗ hổng ⚠️",
+    "statusMastered": "Làm chủ ✅",
+    "deleteDialogTitle": "Xóa Lộ Trình?",
+    "deleteDialogDesc": "Bạn có chắc chắn muốn xóa lộ trình \"{name}\"? Lịch sử hoạt động và điểm EXP của bạn vẫn sẽ được giữ an toàn.",
+    "errorLoading": "Không thể tải chi tiết lộ trình."
+  },
   "modals": {
     "createTrack": {
       "title": "Tạo Lộ Trình Mới",
@@ -136,6 +167,18 @@
       "statusMastered": "Đã làm chủ ✅",
       "cancel": "Hủy",
       "submit": "Thêm Khái Niệm",
+      "saving": "Đang lưu..."
+    },
+    "createMilestone": {
+      "buttonText": "Thêm Cột Mốc",
+      "title": "Thêm Cột Mốc Mục Tiêu",
+      "desc": "Tạo các dấu mốc hoặc checkpoint quan trọng cần hoàn thành.",
+      "nameLabel": "Tên Cột Mốc *",
+      "namePlaceholder": "VD: Hoàn thành Module 1, Làm xong App Demo",
+      "descLabel": "Mô tả thêm (Tùy chọn)",
+      "descPlaceholder": "Chi tiết hoặc tiêu chí nghiệm thu",
+      "cancel": "Hủy",
+      "submit": "Thêm Cột Mốc",
       "saving": "Đang lưu..."
     },
     "checkIn": {

@@ -17,9 +17,11 @@ import { CheckInDialog } from "./CheckInDialog";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export function TrackDetailView({ trackId }: { trackId: string }) {
   const router = useRouter();
+  const t = useTranslations("trackDetail");
   const { notifyEvent } = useContinuousTour();
   const { data: track, isLoading: trackLoading, isError: trackError } = useTrack(trackId);
   const { mutate: deleteTrack, isPending: isDeletingTrack } = useDeleteTrack();
@@ -64,7 +66,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
       <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-800">
         <AlertCircle className="h-4 w-4 text-red-600" />
         <AlertTitle className="font-semibold">Error</AlertTitle>
-        <AlertDescription className="text-xs">Failed to load track details.</AlertDescription>
+        <AlertDescription className="text-xs">{t("errorLoading")}</AlertDescription>
       </Alert>
     );
   }
@@ -77,7 +79,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
       {/* Back button */}
       <div>
         <Link href="/" className="inline-flex items-center text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
-          <ArrowLeft className="w-3.5 h-3.5 mr-1" /> Back to Dashboard
+          <ArrowLeft className="w-3.5 h-3.5 mr-1" /> {t("backToDashboard")}
         </Link>
       </div>
 
@@ -86,18 +88,18 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">{track.name}</h1>
-            <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">{track.description || "No description provided."}</p>
+            <p className="text-slate-500 text-sm mt-1.5 leading-relaxed">{track.description || t("noDesc")}</p>
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <Button id="tour-checkin-now-btn" onClick={() => setIsCheckInOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs h-9 px-4 shadow-sm">
-              Check-In Now
+              {t("checkInNow")}
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setShowDeleteTrackConfirm(true)}
               className="border-slate-200 text-slate-500 hover:text-red-600 hover:bg-red-50 text-xs h-9 px-2.5"
-              title="Delete Track"
+              title={t("deleteTrack")}
             >
               <Trash2 className="w-4 h-4" />
             </Button>
@@ -106,15 +108,13 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         
         <div className="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t border-slate-100">
           <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-full text-xs font-medium text-slate-700">
-            <span>🔥 Current Streak:</span>
-            <span className="font-bold text-slate-900">{track.currentStreak}</span>
+            <span>{t("currentStreak", { count: track.currentStreak })}</span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-50 border border-slate-200 rounded-full text-xs font-medium text-slate-700">
-            <span>⭐ Best Streak:</span>
-            <span className="font-bold text-slate-900">{track.longestStreak}</span>
+            <span>{t("bestStreak", { count: track.longestStreak })}</span>
           </div>
           <Link id="tour-gaps-btn" href={`/tracks/${track.id}/gaps`} className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline ml-auto">
-            View Learning Gaps &rarr;
+            {t("viewGaps")}
           </Link>
         </div>
       </div>
@@ -124,8 +124,8 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900">Milestones</h2>
-              <p className="text-xs text-slate-400">Key achievements for this track</p>
+              <h2 className="text-base font-bold text-slate-900">{t("milestonesTitle")}</h2>
+              <p className="text-xs text-slate-400">{t("milestonesDesc")}</p>
             </div>
             <CreateMilestoneDialog trackId={track.id} />
           </div>
@@ -136,7 +136,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
             </div>
           ) : milestones.length === 0 ? (
             <div className="py-8 text-center bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
-              <p className="text-slate-400 italic text-xs">No milestones created yet.</p>
+              <p className="text-slate-400 italic text-xs">{t("noMilestones")}</p>
             </div>
           ) : (
             <ul className="space-y-2">
@@ -172,7 +172,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
                   <button
                     onClick={() => deleteMilestone(milestone.id)}
                     className="opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-600 p-1 transition-all"
-                    title="Delete Milestone"
+                    title={t("deleteMilestone")}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -186,8 +186,8 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         <div id="tour-concepts-section" className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900">Concepts</h2>
-              <p className="text-xs text-slate-400">Core topics & knowledge items</p>
+              <h2 className="text-base font-bold text-slate-900">{t("conceptsTitle")}</h2>
+              <p className="text-xs text-slate-400">{t("conceptsDesc")}</p>
             </div>
             <div id="tour-add-concept-btn">
               <CreateConceptDialog trackId={track.id} />
@@ -200,7 +200,7 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
             </div>
           ) : concepts.length === 0 ? (
             <div className="py-8 text-center bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
-              <p className="text-slate-400 italic text-xs">No concepts added yet.</p>
+              <p className="text-slate-400 italic text-xs">{t("noConcepts")}</p>
             </div>
           ) : (
             <ul className="space-y-2">
@@ -225,15 +225,15 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
                       })}
                       className="text-[11px] font-medium bg-white border border-slate-200 rounded px-2 py-0.5 text-slate-700 cursor-pointer focus:outline-none focus:border-indigo-500"
                     >
-                      <option value="NOT_UNDERSTOOD">Not Understood ❌</option>
-                      <option value="EXPLAINED_WITH_GAPS">Gaps ⚠️</option>
-                      <option value="MASTERED">Mastered ✅</option>
+                      <option value="NOT_UNDERSTOOD">{t("statusNotUnderstood")}</option>
+                      <option value="EXPLAINED_WITH_GAPS">{t("statusGaps")}</option>
+                      <option value="MASTERED">{t("statusMastered")}</option>
                     </select>
 
                     <button
                       onClick={() => deleteConcept(concept.id)}
                       className="opacity-0 group-hover:opacity-100 text-slate-300 hover:text-red-600 p-1 transition-all"
-                      title="Delete Concept"
+                      title={t("deleteConcept")}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -250,10 +250,10 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-indigo-600" /> Recent Activity Timeline
+              <Clock className="w-4 h-4 text-indigo-600" /> {t("timelineTitle")}
             </h2>
             <p className="text-xs text-slate-400 mt-0.5">
-              History of daily check-ins, notes, and Feynman technique logs
+              {t("timelineDesc")}
             </p>
           </div>
         </div>
@@ -271,8 +271,8 @@ export function TrackDetailView({ trackId }: { trackId: string }) {
         isOpen={showDeleteTrackConfirm}
         onClose={() => setShowDeleteTrackConfirm(false)}
         onConfirm={handleConfirmDeleteTrack}
-        title="Delete Track?"
-        description={`Are you sure you want to delete track "${track.name}"? Your activity history and EXP will be safely preserved.`}
+        title={t("deleteDialogTitle")}
+        description={t("deleteDialogDesc", { name: track.name })}
         isPending={isDeletingTrack}
       />
     </div>

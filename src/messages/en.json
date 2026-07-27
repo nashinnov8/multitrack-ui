@@ -111,6 +111,37 @@
     "statusPaused": "Paused",
     "statusCompleted": "Completed"
   },
+  "trackDetail": {
+    "backToDashboard": "Back to Dashboard",
+    "noDesc": "No description provided.",
+    "checkInNow": "Check-In Now",
+    "deleteTrack": "Delete Track",
+    "currentStreak": "🔥 Current Streak: {count}",
+    "bestStreak": "⭐ Best Streak: {count}",
+    "viewGaps": "View Learning Gaps →",
+    "milestonesTitle": "Milestones",
+    "milestonesDesc": "Key achievements for this track",
+    "addMilestone": "Add Milestone",
+    "noMilestones": "No milestones created yet.",
+    "deleteMilestone": "Delete Milestone",
+    "conceptsTitle": "Concepts",
+    "conceptsDesc": "Core topics & knowledge items",
+    "addConcept": "Add Concept",
+    "noConcepts": "No concepts added yet.",
+    "deleteConcept": "Delete Concept",
+    "timelineTitle": "Recent Activity Timeline",
+    "timelineDesc": "History of daily check-ins, notes, and Feynman technique logs",
+    "noLogs": "No check-ins logged yet.",
+    "noLogsPrompt": "Click \"Check-In Now\" above to record your first entry!",
+    "learned": "Learned:",
+    "gap": "Gap:",
+    "statusNotUnderstood": "Not Understood ❌",
+    "statusGaps": "Gaps ⚠️",
+    "statusMastered": "Mastered ✅",
+    "deleteDialogTitle": "Delete Track?",
+    "deleteDialogDesc": "Are you sure you want to delete track \"{name}\"? Your activity history and EXP will be safely preserved.",
+    "errorLoading": "Failed to load track details."
+  },
   "modals": {
     "createTrack": {
       "title": "Create New Track",
@@ -136,6 +167,18 @@
       "statusMastered": "Mastered ✅",
       "cancel": "Cancel",
       "submit": "Add Concept",
+      "saving": "Saving..."
+    },
+    "createMilestone": {
+      "buttonText": "Add Milestone",
+      "title": "Add Milestone",
+      "desc": "Create a key objective or checkpoint for this track.",
+      "nameLabel": "Milestone Name *",
+      "namePlaceholder": "e.g. Finish Module 1, Build Portfolio App",
+      "descLabel": "Description (Optional)",
+      "descPlaceholder": "Additional details or criteria",
+      "cancel": "Cancel",
+      "submit": "Add Milestone",
       "saving": "Saving..."
     },
     "checkIn": {

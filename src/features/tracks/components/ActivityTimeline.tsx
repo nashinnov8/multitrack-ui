@@ -5,9 +5,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { format, parseISO } from "date-fns";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, MessageSquare, BookOpen, Lightbulb, AlertTriangle, Tag, CheckCircle2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, MessageSquare, BookOpen, Lightbulb, AlertTriangle, Tag } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function ActivityTimeline({ trackId }: { trackId: string }) {
+  const t = useTranslations("trackDetail");
+  const tDash = useTranslations("dashboard");
   const [page, setPage] = useState(0);
   const size = 5;
   const { data, isLoading, isError } = useActivityLogs(trackId, page, size);
@@ -25,7 +28,7 @@ export function ActivityTimeline({ trackId }: { trackId: string }) {
   if (isError) {
     return (
       <p className="text-xs text-red-500 italic py-2">
-        Failed to load activity timeline.
+        {t("errorLoading")}
       </p>
     );
   }
@@ -35,8 +38,8 @@ export function ActivityTimeline({ trackId }: { trackId: string }) {
   if (logs.length === 0) {
     return (
       <div className="py-8 text-center bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
-        <p className="text-slate-400 italic text-xs">No check-ins logged yet.</p>
-        <p className="text-slate-400 text-[11px] mt-1">Click "Check-In Now" above to record your first entry!</p>
+        <p className="text-slate-400 italic text-xs">{t("noLogs")}</p>
+        <p className="text-slate-400 text-[11px] mt-1">{t("noLogsPrompt")}</p>
       </div>
     );
   }
@@ -85,7 +88,7 @@ export function ActivityTimeline({ trackId }: { trackId: string }) {
                 <div className="flex items-start gap-1.5 text-xs text-slate-700 pt-1 border-t border-slate-200/50">
                   <BookOpen className="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold text-slate-900">Learned: </span>
+                    <span className="font-semibold text-slate-900">{t("learned")} </span>
                     <span>{log.whatLearned}</span>
                   </div>
                 </div>
@@ -104,7 +107,7 @@ export function ActivityTimeline({ trackId }: { trackId: string }) {
                 <div className="flex items-start gap-1.5 text-xs text-amber-800 bg-amber-50/80 p-2 rounded border border-amber-200/60">
                   <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold">Gap: </span>
+                    <span className="font-semibold">{t("gap")} </span>
                     <span>{log.gapsFound}</span>
                   </div>
                 </div>
@@ -124,10 +127,10 @@ export function ActivityTimeline({ trackId }: { trackId: string }) {
             onClick={() => setPage((p) => p - 1)}
             className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 text-[11px] h-7 px-2.5"
           >
-            <ChevronLeft className="w-3 h-3 mr-0.5" /> Prev
+            <ChevronLeft className="w-3 h-3 mr-0.5" /> {tDash("prev")}
           </Button>
           <span className="text-[11px] text-slate-500 font-medium px-1">
-            {page + 1} / {data?.totalPages}
+            {tDash("pageOf", { current: page + 1, total: data?.totalPages ?? 1 })}
           </span>
           <Button
             size="sm"
@@ -136,7 +139,7 @@ export function ActivityTimeline({ trackId }: { trackId: string }) {
             onClick={() => setPage((p) => p + 1)}
             className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 text-[11px] h-7 px-2.5"
           >
-            Next <ChevronRight className="w-3 h-3 ml-0.5" />
+            {tDash("next")} <ChevronRight className="w-3 h-3 ml-0.5" />
           </Button>
         </div>
       )}
